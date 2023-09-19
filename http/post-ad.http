@@ -1,0 +1,13 @@
+POST http://localhost:4000/ads
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Ordinateur",
+  "description": "lorem ipsum",
+  "owner": "a@a.com",
+  "price": 1000,
+  "picture": "",
+  "location": "Paris",
+  "createdAt": "2023-09-19T10:14:15.922Z"
+}
