@@ -1,9 +1,16 @@
 import express from "express";
+import { ads } from "./ads";
 
 const server = express();
 
+// Hello world
 server.get("/", (request, response) => {
   response.send("Hello from Express server.");
+});
+
+// GET /ads
+server.get("/ads", (request, response) => {
+  response.json({ ads });
 });
 
 const PORT = 4000;
