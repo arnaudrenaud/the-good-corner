@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import { ads } from "./ads";
 
 const server = express();
@@ -19,8 +19,21 @@ server.post("/ads", (request, response) => {
   const ad = request.body;
 
   ads.push(ad);
+  response.status(201).json({ ad });
+});
+
+// GET /ads/:id
+server.get("/ads/:id", (request, response) => {
+  const id = parseInt(request.params.id);
+  const ad = ads.find((ad) => ad.id === id);
+  if (!ad) {
+    response.sendStatus(404);
+  }
   response.json({ ad });
 });
+
+// DELETE /ads/:id
+// PUT /ads/:id
 
 const PORT = 4000;
 server.listen(PORT, () => {
