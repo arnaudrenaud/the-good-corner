@@ -1,0 +1,16 @@
+{
+  "name": "the-good-corner",
+  "version": "0.1.0",
+  "description": "Simple clone of leboncoin.fr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "author": "Arnaud Renaud",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
