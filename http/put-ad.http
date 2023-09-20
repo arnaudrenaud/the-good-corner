@@ -3,6 +3,8 @@ Content-Type: application/json
 
 {
   "id": 3,
-  "title": "Vélo",
-  "description": "lorem ipsum"
+  "title": "",
+  "description": "",
+  "picture": "",
+  "fruit": "pomme"
 }

@@ -53,8 +53,16 @@ server.put("/ads/:id", (request, response) => {
   }
   const ad = ads[adIndex];
   const rawData = request.body;
-  const { id, ...newData } = rawData;
-  const updatedAd = { ...ad, ...newData };
+  const updatedAd = {
+    ...ad,
+    title: rawData.title || ad.title,
+    description: rawData.description ?? ad.description,
+    owner: rawData.owner || ad.owner,
+    price: rawData.price ?? ad.price,
+    picture: rawData.picture ?? ad.picture,
+    location: rawData.location ?? ad.location,
+  };
+
   ads.splice(adIndex, 1, updatedAd);
   response.json({ ad: updatedAd });
 });
