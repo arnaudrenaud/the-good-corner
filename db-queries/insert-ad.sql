@@ -1,0 +1,1 @@
+INSERT INTO Ad (title, owner) VALUES ('Voiture', 'Laure');
