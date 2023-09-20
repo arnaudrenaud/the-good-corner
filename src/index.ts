@@ -15,7 +15,7 @@ server.get("/", (request, response) => {
 
 // GET /ads
 server.get("/ads", (request, response) => {
-  db.all("SELECT * FROM Ad;", (err, ads) => {
+  db.all("SELECT * FROM Ad;", function (err, ads) {
     response.json({ ads });
   });
 });
@@ -24,8 +24,24 @@ server.get("/ads", (request, response) => {
 server.post("/ads", (request, response) => {
   const ad = request.body;
 
-  ads.push(ad);
-  response.status(201).json({ ad });
+  if (!ad.title) {
+    response.status(400).json({ error: "Title cannot be empty." });
+  }
+  if (!ad.owner) {
+    response.status(400).json({ error: "Owner cannot be empty." });
+  }
+
+  // ads.push(ad);
+  db.run(
+    "INSERT INTO Ad (title, description, owner, price, picture, location) VALUES (?, ?, ?, ?, ?, ?);",
+    [ad.title, ad.description, ad.owner, ad.price, ad.picture, ad.location],
+    function (err) {
+      if (err) {
+        response.status(400);
+      }
+      response.status(201).json({ id: this.lastID });
+    }
+  );
 });
 
 // GET /ads/:id
