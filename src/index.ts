@@ -1,5 +1,9 @@
-import express, { raw, response } from "express";
+import express from "express";
+import { Database } from "sqlite3";
+
 import { ads } from "./ads";
+
+const db = new Database("db.sqlite");
 
 const server = express();
 server.use(express.json());
@@ -11,7 +15,9 @@ server.get("/", (request, response) => {
 
 // GET /ads
 server.get("/ads", (request, response) => {
-  response.json({ ads });
+  db.all("SELECT * FROM Ad;", (err, ads) => {
+    response.json({ ads });
+  });
 });
 
 // POST /ads
