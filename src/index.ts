@@ -33,6 +33,17 @@ server.get("/ads/:id", (request, response) => {
 });
 
 // DELETE /ads/:id
+server.delete("/ads/:id", (request, response) => {
+  const id = parseInt(request.params.id);
+  const adIndex = ads.findIndex((ad) => ad.id === id);
+  if (adIndex === -1) {
+    response.sendStatus(404);
+  }
+  const ad = ads[adIndex];
+  ads.splice(adIndex, 1);
+  response.json({ ad });
+});
+
 // PUT /ads/:id
 
 const PORT = 4000;
