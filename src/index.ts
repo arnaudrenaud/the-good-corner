@@ -45,6 +45,18 @@ server.delete("/ads/:id", (request, response) => {
 });
 
 // PUT /ads/:id
+server.put("/ads/:id", (request, response) => {
+  const id = parseInt(request.params.id);
+  const adIndex = ads.findIndex((ad) => ad.id === id);
+  if (adIndex === -1) {
+    response.sendStatus(404);
+  }
+  const ad = ads[adIndex];
+  const newData = request.body;
+  const updatedAd = { ...ad, ...newData };
+  ads.splice(adIndex, 1, updatedAd);
+  response.json({ ad: updatedAd });
+});
 
 const PORT = 4000;
 server.listen(PORT, () => {
