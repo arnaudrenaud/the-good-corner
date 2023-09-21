@@ -1,4 +1,4 @@
-CREATE TABLE Ad (
+CREATE TABLE IF NOT EXISTS Ad (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title VARCHAR(100) NOT NULL,
   description TEXT,
@@ -6,5 +6,7 @@ CREATE TABLE Ad (
   price INT,
   picture TEXT,
   location VARCHAR(100),
-  createdAt INTEGER
+  createdAt INTEGER,
+  categoryId INT NOT NULL,
+  FOREIGN KEY (categoryId) REFERENCES category(id)
 );
