@@ -1,8 +1,6 @@
 import express from "express";
 import { Database } from "sqlite3";
 
-import { ads } from "./ads";
-
 const db = new Database("db.sqlite");
 
 const server = express();
