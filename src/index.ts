@@ -10,13 +10,13 @@ server.use(express.json());
 
 // Hello world
 server.get("/", (request, response) => {
-  response.send("Hello from Express server.");
+  return response.send("Hello from Express server.");
 });
 
 // GET /ads
 server.get("/ads", (request, response) => {
   db.all("SELECT * FROM Ad;", function (err, ads) {
-    response.json({ ads });
+    return response.json({ ads });
   });
 });
 
@@ -25,10 +25,10 @@ server.post("/ads", (request, response) => {
   const ad = request.body;
 
   if (!ad.title) {
-    response.status(400).json({ error: "Title cannot be empty." });
+    return response.status(400).json({ error: "Title cannot be empty." });
   }
   if (!ad.owner) {
-    response.status(400).json({ error: "Owner cannot be empty." });
+    return response.status(400).json({ error: "Owner cannot be empty." });
   }
 
   // ads.push(ad);
@@ -37,9 +37,9 @@ server.post("/ads", (request, response) => {
     [ad.title, ad.description, ad.owner, ad.price, ad.picture, ad.location],
     function (err) {
       if (err) {
-        response.status(400);
+        return response.status(400);
       }
-      response.status(201).json({ id: this.lastID });
+      return response.status(201).json({ id: this.lastID });
     }
   );
 });
@@ -51,14 +51,14 @@ server.get("/ads/:id", (request, response) => {
   db.get("SELECT * FROM Ad WHERE id = ?", [id], (err, ad) => {
     if (err) {
       console.error(err.message);
-      response.sendStatus(500);
+      return response.sendStatus(500);
     }
 
     if (ad) {
-      response.json({ ad });
+      return response.json({ ad });
     } else {
       //404 : la ressource n'existe pas
-      response.sendStatus(404);
+      return response.sendStatus(404);
     }
   });
 });
@@ -69,9 +69,9 @@ server.delete("/ads/:id", (request, response) => {
   db.run("DELETE FROM Ad WHERE id = ?", [id], function (err) {
     if (err) {
       console.error(err.message);
-      response.sendStatus(500);
+      return response.sendStatus(500);
     }
-    response.json({ id });
+    return response.json({ id });
   });
 });
 
@@ -93,9 +93,9 @@ server.put("/ads/:id", (request, response) => {
   db.get("SELECT * FROM Ad WHERE id = ?", [id], function (err, ad: Ad) {
     if (err) {
       console.error(err.message);
-      response.sendStatus(500);
+      return response.sendStatus(500);
     } else if (!ad) {
-      response.sendStatus(404);
+      return response.sendStatus(404);
     } else {
       const rawData = request.body;
 
@@ -130,9 +130,9 @@ server.put("/ads/:id", (request, response) => {
         function (err) {
           if (err) {
             console.error(err.message);
-            response.sendStatus(500);
+            return response.sendStatus(500);
           } else {
-            response.json({ ad: updatedAd });
+            return response.json({ ad: updatedAd });
           }
         }
       );
