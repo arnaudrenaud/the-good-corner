@@ -52,7 +52,6 @@ server.get("/ads/:id", (request, response) => {
     if (err) {
       console.error(err.message);
       response.sendStatus(500);
-      return;
     }
 
     if (ad) {
@@ -71,33 +70,74 @@ server.delete("/ads/:id", (request, response) => {
     if (err) {
       console.error(err.message);
       response.sendStatus(500);
-      return;
     }
     response.json({ id });
   });
 });
 
+type Ad = {
+  id: number;
+  title: string;
+  description?: string;
+  owner: string;
+  price?: number;
+  picture?: string;
+  location?: string;
+  createdAd?: number;
+};
+
 // PUT /ads/:id
 server.put("/ads/:id", (request, response) => {
-  const _id = parseInt(request.params.id);
-  const adIndex = ads.findIndex((ad) => ad.id === _id);
-  if (adIndex === -1) {
-    response.sendStatus(404);
-  }
-  const ad = ads[adIndex];
-  const rawData = request.body;
-  const updatedAd = {
-    ...ad,
-    title: rawData.title || ad.title,
-    description: rawData.description ?? ad.description,
-    owner: rawData.owner || ad.owner,
-    price: rawData.price ?? ad.price,
-    picture: rawData.picture ?? ad.picture,
-    location: rawData.location ?? ad.location,
-  };
+  const id = parseInt(request.params.id);
 
-  ads.splice(adIndex, 1, updatedAd);
-  response.json({ ad: updatedAd });
+  db.get("SELECT * FROM Ad WHERE id = ?", [id], function (err, ad: Ad) {
+    if (err) {
+      console.error(err.message);
+      response.sendStatus(500);
+    } else if (!ad) {
+      response.sendStatus(404);
+    } else {
+      const rawData = request.body;
+
+      if (rawData.title === "") {
+        return response.status(400).json({ error: "Title cannot be empty." });
+      }
+      if (rawData.owner === "") {
+        return response.status(400).json({ error: "Owner cannot be empty." });
+      }
+
+      const updatedAd = {
+        ...ad,
+        title: rawData.title || ad.title,
+        description: rawData.description ?? ad.description,
+        owner: rawData.owner || ad.owner,
+        price: rawData.price ?? ad.price,
+        picture: rawData.picture ?? ad.picture,
+        location: rawData.location ?? ad.location,
+      };
+
+      db.run(
+        "UPDATE Ad SET title = ?, description = ?, owner = ?, price = ?, picture = ?, location = ? WHERE id = ?",
+        [
+          updatedAd.title,
+          updatedAd.description,
+          updatedAd.owner,
+          updatedAd.price,
+          updatedAd.picture,
+          updatedAd.location,
+          id,
+        ],
+        function (err) {
+          if (err) {
+            console.error(err.message);
+            response.sendStatus(500);
+          } else {
+            response.json({ ad: updatedAd });
+          }
+        }
+      );
+    }
+  });
 });
 
 const PORT = 4000;
