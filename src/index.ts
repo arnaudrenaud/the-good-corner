@@ -46,12 +46,22 @@ server.post("/ads", (request, response) => {
 
 // GET /ads/:id
 server.get("/ads/:id", (request, response) => {
-  const id = parseInt(request.params.id);
-  const ad = ads.find((ad) => ad.id === id);
-  if (!ad) {
-    response.sendStatus(404);
-  }
-  response.json({ ad });
+  const id = request.params.id;
+
+  db.get("SELECT * FROM Ad WHERE id = ?", [id], (err, ad) => {
+    if (err) {
+      console.error(err.message);
+      response.sendStatus(500);
+      return;
+    }
+
+    if (ad) {
+      response.json({ ad });
+    } else {
+      //404 : la ressource n'existe pas
+      response.sendStatus(404);
+    }
+  });
 });
 
 // DELETE /ads/:id
