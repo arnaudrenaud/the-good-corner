@@ -1,3 +1,11 @@
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
 export type TypeAd = {
   id: number;
   title: string;
@@ -6,18 +14,34 @@ export type TypeAd = {
   price?: number;
   picture?: string;
   location?: string;
-  createdAd?: number;
+  createdAd?: Date;
 };
 
-class Ad implements TypeAd {
-  id: number;
-  title: string;
-  description?: string;
-  owner: string;
-  price?: number;
-  picture?: string;
-  location?: string;
-  createdAd?: number;
+@Entity()
+class Ad extends BaseEntity implements TypeAd {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column()
+  title!: string;
+
+  @Column({ default: "" })
+  description!: string;
+
+  @Column()
+  owner!: string;
+
+  @Column({ nullable: true })
+  price!: number;
+
+  @Column({ default: "" })
+  picture!: string;
+
+  @Column({ default: "" })
+  location!: string;
+
+  @CreateDateColumn()
+  createdAd!: Date;
 
   // constructor(id: number, title: string, description: string, owner: string) {
   //   this.id = id;

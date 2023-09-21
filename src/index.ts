@@ -1,8 +1,17 @@
 import express from "express";
 import { Database } from "sqlite3";
-import { Ad } from "./Ad";
+import { DataSource } from "typeorm";
+
+import Ad, { TypeAd } from "./entities/ad";
 
 const db = new Database("db.sqlite");
+
+const dataSource = new DataSource({
+  type: "sqlite",
+  database: "db.sqlite",
+  entities: [Ad],
+  synchronize: true,
+});
 
 const server = express();
 server.use(express.json());
@@ -78,7 +87,7 @@ server.delete("/ads/:id", (request, response) => {
 server.put("/ads/:id", (request, response) => {
   const id = parseInt(request.params.id);
 
-  db.get("SELECT * FROM Ad WHERE id = ?", [id], function (err, ad: Ad) {
+  db.get("SELECT * FROM Ad WHERE id = ?", [id], function (err, ad: TypeAd) {
     if (err) {
       console.error(err.message);
       return response.sendStatus(500);
@@ -129,6 +138,7 @@ server.put("/ads/:id", (request, response) => {
 });
 
 const PORT = 4000;
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
+  await dataSource.initialize();
   console.log(`Server listening on port ${PORT}.`);
 });
