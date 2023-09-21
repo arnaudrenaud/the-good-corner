@@ -1,0 +1,1 @@
+INSERT INTO Category (name) VALUES ('Vêtement'), ('Voiture'), ('Autre');
