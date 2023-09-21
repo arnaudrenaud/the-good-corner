@@ -1,5 +1,6 @@
 import express from "express";
 import { Database } from "sqlite3";
+import { Ad } from "./Ad";
 
 const db = new Database("db.sqlite");
 
@@ -72,17 +73,6 @@ server.delete("/ads/:id", (request, response) => {
     return response.json({ id });
   });
 });
-
-type Ad = {
-  id: number;
-  title: string;
-  description?: string;
-  owner: string;
-  price?: number;
-  picture?: string;
-  location?: string;
-  createdAd?: number;
-};
 
 // PUT /ads/:id
 server.put("/ads/:id", (request, response) => {
