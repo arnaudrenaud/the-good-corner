@@ -73,57 +73,25 @@ server.delete("/ads/:id", async (request, response) => {
 });
 
 // PUT /ads/:id
-server.put("/ads/:id", (request, response) => {
+server.put("/ads/:id", async (request, response) => {
   const id = parseInt(request.params.id);
+  const adData = request.body;
 
-  db.get("SELECT * FROM Ad WHERE id = ?", [id], function (err, ad: TypeAd) {
-    if (err) {
-      console.error(err.message);
-      return response.sendStatus(500);
-    } else if (!ad) {
-      return response.sendStatus(404);
-    } else {
-      const rawData = request.body;
+  if (adData.title === "") {
+    return response.status(400).json({ error: "Title cannot be empty." });
+  }
+  if (adData.owner === "") {
+    return response.status(400).json({ error: "Owner cannot be empty." });
+  }
 
-      if (rawData.title === "") {
-        return response.status(400).json({ error: "Title cannot be empty." });
-      }
-      if (rawData.owner === "") {
-        return response.status(400).json({ error: "Owner cannot be empty." });
-      }
-
-      const updatedAd = {
-        ...ad,
-        title: rawData.title || ad.title,
-        description: rawData.description ?? ad.description,
-        owner: rawData.owner || ad.owner,
-        price: rawData.price ?? ad.price,
-        picture: rawData.picture ?? ad.picture,
-        location: rawData.location ?? ad.location,
-      };
-
-      db.run(
-        "UPDATE Ad SET title = ?, description = ?, owner = ?, price = ?, picture = ?, location = ? WHERE id = ?",
-        [
-          updatedAd.title,
-          updatedAd.description,
-          updatedAd.owner,
-          updatedAd.price,
-          updatedAd.picture,
-          updatedAd.location,
-          id,
-        ],
-        function (err) {
-          if (err) {
-            console.error(err.message);
-            return response.sendStatus(500);
-          } else {
-            return response.json({ ad: updatedAd });
-          }
-        }
-      );
+  try {
+    const updatedAd = await Ad.updateAd(id, adData);
+    return response.json({ ad: updatedAd });
+  } catch (error) {
+    if (isError(error)) {
+      return response.status(404).json({ error: error.message });
     }
-  });
+  }
 });
 
 const PORT = 4000;

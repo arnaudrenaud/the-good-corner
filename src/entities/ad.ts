@@ -91,6 +91,13 @@ class Ad extends BaseEntity implements TypeAd {
     }
   }
 
+  static async updateAd(id: number, partialAd: Partial<Ad>): Promise<Ad> {
+    const ad = await Ad.getAd(id);
+    await Ad.update(id, partialAd);
+    await ad.reload();
+    return ad;
+  }
+
   getStringRepresentation(): string {
     return `${this.id} | ${this.title} | ${this.owner} | ${this.price} €`;
   }
