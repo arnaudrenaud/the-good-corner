@@ -43,12 +43,26 @@ class Ad extends BaseEntity implements TypeAd {
   @CreateDateColumn()
   createdAd!: Date;
 
-  // constructor(id: number, title: string, description: string, owner: string) {
-  //   this.id = id;
-  //   this.title = title;
-  //   this.owner = owner;
-  //   this.description = description;
-  // }
+  constructor(ad?: TypeAd) {
+    super();
+
+    if (ad) {
+      this.title = ad.title;
+      this.owner = ad.owner;
+      if (ad.description) {
+        this.description = ad.description;
+      }
+      if (ad.price) {
+        this.price = ad.price;
+      }
+      if (ad.picture) {
+        this.picture = ad.picture;
+      }
+      if (ad.location) {
+        this.location = ad.location;
+      }
+    }
+  }
 
   // static getAllAds() {
   //   // retourner toutes les annonces

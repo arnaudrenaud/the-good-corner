@@ -29,27 +29,20 @@ server.get("/ads", (request, response) => {
 });
 
 // POST /ads
-server.post("/ads", (request, response) => {
-  const ad = request.body;
+server.post("/ads", async (request, response) => {
+  const adData = request.body;
 
-  if (!ad.title) {
+  if (!adData.title) {
     return response.status(400).json({ error: "Title cannot be empty." });
   }
-  if (!ad.owner) {
+  if (!adData.owner) {
     return response.status(400).json({ error: "Owner cannot be empty." });
   }
 
-  // ads.push(ad);
-  db.run(
-    "INSERT INTO Ad (title, description, owner, price, picture, location) VALUES (?, ?, ?, ?, ?, ?);",
-    [ad.title, ad.description, ad.owner, ad.price, ad.picture, ad.location],
-    function (err) {
-      if (err) {
-        return response.status(400);
-      }
-      return response.status(201).json({ id: this.lastID });
-    }
-  );
+  const newAd = new Ad(adData);
+  const savedAd = await newAd.save();
+
+  return response.status(201).json({ ad: savedAd });
 });
 
 // GET /ads/:id
