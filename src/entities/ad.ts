@@ -3,8 +3,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import Category from "./category";
 
 @Entity()
 class Ad extends BaseEntity {
@@ -31,6 +33,9 @@ class Ad extends BaseEntity {
 
   @CreateDateColumn()
   createdAd!: Date;
+
+  @ManyToOne(() => Category, (category) => category.ads)
+  category!: Category;
 
   constructor(ad?: Ad) {
     super();
