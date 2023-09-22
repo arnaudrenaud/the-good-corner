@@ -79,12 +79,15 @@ class Ad extends BaseEntity {
   }
 
   static async getAds(): Promise<Ad[]> {
-    const ads = await Ad.find();
+    const ads = await Ad.find({ relations: { category: true } });
     return ads;
   }
 
   static async getAdById(id: number): Promise<Ad> {
-    const ad = await Ad.findOneBy({ id });
+    const ad = await Ad.findOne({
+      where: { id },
+      relations: { category: true },
+    });
     if (!ad) {
       throw new Error(`Ad with ID ${id} does not exist.`);
     }
