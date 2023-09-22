@@ -41,7 +41,7 @@ class Ad extends BaseEntity {
   category!: Category;
 
   @JoinTable({ name: "TagsForAds" })
-  @ManyToMany(() => Tag, (tag) => tag.ads)
+  @ManyToMany(() => Tag, (tag) => tag.ads, { eager: true })
   tags!: Tag[];
 
   constructor(ad?: Partial<Ad>) {
