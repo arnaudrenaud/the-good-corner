@@ -73,11 +73,11 @@ class Ad extends BaseEntity {
   }
 
   static async saveNewAd(
-    adData: Partial<Ad> & { categoryId?: number }
+    adData: Partial<Ad> & { category?: number }
   ): Promise<Ad> {
     const newAd = new Ad(adData);
-    if (adData.categoryId) {
-      const category = await Category.getCategoryById(adData.categoryId);
+    if (adData.category) {
+      const category = await Category.getCategoryById(adData.category);
       newAd.category = category;
     }
     const savedAd = await newAd.save();
