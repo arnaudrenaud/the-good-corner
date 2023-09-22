@@ -6,19 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-export type TypeAd = {
-  id: number;
-  title: string;
-  description?: string;
-  owner: string;
-  price?: number;
-  picture?: string;
-  location?: string;
-  createdAd?: Date;
-};
-
 @Entity()
-class Ad extends BaseEntity implements TypeAd {
+class Ad extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -43,7 +32,7 @@ class Ad extends BaseEntity implements TypeAd {
   @CreateDateColumn()
   createdAd!: Date;
 
-  constructor(ad?: TypeAd) {
+  constructor(ad?: Ad) {
     super();
 
     if (ad) {
@@ -102,7 +91,5 @@ class Ad extends BaseEntity implements TypeAd {
     return `${this.id} | ${this.title} | ${this.owner} | ${this.price} €`;
   }
 }
-
-// const voiture = new Ad(1, "Voiture", "", "Arnaud");
 
 export default Ad;

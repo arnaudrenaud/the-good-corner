@@ -1,11 +1,8 @@
 import express from "express";
-import { Database } from "sqlite3";
 import { DataSource } from "typeorm";
 
-import Ad, { TypeAd } from "./entities/ad";
+import Ad from "./entities/ad";
 import { isError } from "./utils";
-
-const db = new Database("db.sqlite");
 
 const dataSource = new DataSource({
   type: "sqlite",
