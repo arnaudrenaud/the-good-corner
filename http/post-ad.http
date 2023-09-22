@@ -8,5 +8,6 @@ Content-Type: application/json
   "price": 500,
   "picture": "",
   "location": "Paris",
-  "categoryId": 3
+  "category": 3,
+  "tags": [1, 3]
 }
