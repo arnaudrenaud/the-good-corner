@@ -100,8 +100,14 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async updateAd(id: number, partialAd: Partial<Ad>): Promise<Ad> {
+  static async updateAd(
+    id: number,
+    partialAd: Partial<Ad> & { category?: number }
+  ): Promise<Ad> {
     const ad = await Ad.getAdById(id);
+    if (partialAd.category) {
+      await Category.getCategoryById(partialAd.category);
+    }
     await Ad.update(id, partialAd);
     await ad.reload();
     return ad;

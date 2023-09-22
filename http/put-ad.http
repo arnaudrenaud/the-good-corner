@@ -1,7 +1,6 @@
-PUT http://localhost:4000/ads/4
+PUT http://localhost:4000/ads/2
 Content-Type: application/json
 
 {
-  "id": 3,
-  "price": 158
+  "category": 8
 }
