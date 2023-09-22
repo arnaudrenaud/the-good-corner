@@ -22,10 +22,9 @@ server.get("/", (request, response) => {
 });
 
 // GET /ads
-server.get("/ads", (request, response) => {
-  db.all("SELECT * FROM Ad;", function (err, ads) {
-    return response.json({ ads });
-  });
+server.get("/ads", async (request, response) => {
+  const ads = await Ad.getAds();
+  return response.json({ ads });
 });
 
 // POST /ads

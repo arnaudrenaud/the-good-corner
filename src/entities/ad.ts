@@ -64,18 +64,19 @@ class Ad extends BaseEntity implements TypeAd {
     }
   }
 
-  static async saveNewAd(adData: any) {
+  static async saveNewAd(adData: any): Promise<Ad> {
     const newAd = new Ad(adData);
     const savedAd = await newAd.save();
     console.log(`New ad saved: ${savedAd.getStringRepresentation()}.`);
     return savedAd;
   }
 
-  // static getAllAds() {
-  //   // retourner toutes les annonces
-  // }
+  static async getAds(): Promise<Ad[]> {
+    const ads = await Ad.find();
+    return ads;
+  }
 
-  getStringRepresentation() {
+  getStringRepresentation(): string {
     return `${this.id} | ${this.title} | ${this.owner} | ${this.price} €`;
   }
 }
