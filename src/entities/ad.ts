@@ -34,7 +34,7 @@ class Ad extends BaseEntity {
   @CreateDateColumn()
   createdAd!: Date;
 
-  @ManyToOne(() => Category, (category) => category.ads)
+  @ManyToOne(() => Category, (category) => category.ads, { eager: true })
   category!: Category;
 
   constructor(ad?: Partial<Ad>) {
@@ -79,14 +79,13 @@ class Ad extends BaseEntity {
   }
 
   static async getAds(): Promise<Ad[]> {
-    const ads = await Ad.find({ relations: { category: true } });
+    const ads = await Ad.find();
     return ads;
   }
 
   static async getAdById(id: number): Promise<Ad> {
     const ad = await Ad.findOne({
       where: { id },
-      relations: { category: true },
     });
     if (!ad) {
       throw new Error(`Ad with ID ${id} does not exist.`);
