@@ -39,8 +39,7 @@ server.post("/ads", async (request, response) => {
     return response.status(400).json({ error: "Owner cannot be empty." });
   }
 
-  const newAd = new Ad(adData);
-  const savedAd = await newAd.save();
+  const savedAd = await Ad.saveNewAd(adData);
 
   return response.status(201).json({ ad: savedAd });
 });

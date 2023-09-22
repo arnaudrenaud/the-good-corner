@@ -64,13 +64,20 @@ class Ad extends BaseEntity implements TypeAd {
     }
   }
 
+  static async saveNewAd(adData: any) {
+    const newAd = new Ad(adData);
+    const savedAd = await newAd.save();
+    console.log(`New ad saved: ${savedAd.getStringRepresentation()}.`);
+    return savedAd;
+  }
+
   // static getAllAds() {
   //   // retourner toutes les annonces
   // }
 
-  // getShortDescriptionAndTitle() {
-  //   return `${this.title} - ${this.price} €`;
-  // }
+  getStringRepresentation() {
+    return `${this.id} | ${this.title} | ${this.owner} | ${this.price} €`;
+  }
 }
 
 // const voiture = new Ad(1, "Voiture", "", "Arnaud");
