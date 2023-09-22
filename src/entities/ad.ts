@@ -3,10 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Category from "./category";
+import Tag from "./tag";
 
 @Entity()
 class Ad extends BaseEntity {
@@ -36,6 +39,10 @@ class Ad extends BaseEntity {
 
   @ManyToOne(() => Category, (category) => category.ads, { eager: true })
   category!: Category;
+
+  @JoinTable({ name: "TagsForAds" })
+  @ManyToMany(() => Tag, (tag) => tag.ads)
+  tags!: Tag[];
 
   constructor(ad?: Partial<Ad>) {
     super();
