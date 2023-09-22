@@ -87,9 +87,9 @@ server.put("/ads/:id", async (request, response) => {
 const PORT = 4000;
 server.listen(PORT, async () => {
   await dataSource.initialize();
-  await Category.saveNewCategory({ name: "Automobile" });
-  await Category.saveNewCategory({ name: "Habillement" });
-  await Category.saveNewCategory({ name: "Autre" });
+  await Category.saveNewCategoryIfNotExisting({ name: "Automobile" });
+  await Category.saveNewCategoryIfNotExisting({ name: "Habillement" });
+  await Category.saveNewCategoryIfNotExisting({ name: "Autre" });
 
   console.log(`Server listening on port ${PORT}.`);
 });

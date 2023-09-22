@@ -29,7 +29,7 @@ class Category extends BaseEntity {
     }
   }
 
-  static async saveNewCategory(
+  static async saveNewCategoryIfNotExisting(
     categoryData: Partial<Category>
   ): Promise<Category> {
     if (!categoryData.name) {
