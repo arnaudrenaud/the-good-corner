@@ -3,11 +3,12 @@ import { DataSource } from "typeorm";
 
 import Ad from "./entities/ad";
 import { isError } from "./utils";
+import Category from "./entities/category";
 
 const dataSource = new DataSource({
   type: "sqlite",
   database: "db.sqlite",
-  entities: [Ad],
+  entities: [Ad, Category],
   synchronize: true,
 });
 
