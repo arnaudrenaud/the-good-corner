@@ -7,5 +7,6 @@ Content-Type: application/json
   "owner": "a@a.com",
   "price": 500,
   "picture": "",
-  "location": "Paris"
+  "location": "Paris",
+  "categoryId": 3
 }

@@ -49,6 +49,14 @@ class Category extends BaseEntity {
     return savedCategory;
   }
 
+  static async getCategoryById(id: number): Promise<Category> {
+    const category = await Category.findOneBy({ id });
+    if (!category) {
+      throw new Error(`Category with ID ${id} does not exist.`);
+    }
+    return category;
+  }
+
   private static async getCategoryByName(
     name: string
   ): Promise<Category | null> {

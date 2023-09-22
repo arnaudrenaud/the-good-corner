@@ -29,16 +29,7 @@ server.get("/ads", async (request, response) => {
 // POST /ads
 server.post("/ads", async (request, response) => {
   const adData = request.body;
-
-  if (!adData.title) {
-    return response.status(400).json({ error: "Title cannot be empty." });
-  }
-  if (!adData.owner) {
-    return response.status(400).json({ error: "Owner cannot be empty." });
-  }
-
   const savedAd = await Ad.saveNewAd(adData);
-
   return response.status(201).json({ ad: savedAd });
 });
 
@@ -47,7 +38,7 @@ server.get("/ads/:id", async (request, response) => {
   const id = parseInt(request.params.id);
 
   try {
-    const ad = await Ad.getAd(id);
+    const ad = await Ad.getAdById(id);
     return response.json({ ad });
   } catch (error) {
     if (isError(error)) {

@@ -37,11 +37,18 @@ class Ad extends BaseEntity {
   @ManyToOne(() => Category, (category) => category.ads)
   category!: Category;
 
-  constructor(ad?: Ad) {
+  constructor(ad?: Partial<Ad>) {
     super();
 
     if (ad) {
+      if (!ad.title) {
+        throw new Error("Ad title cannot be empty.");
+      }
       this.title = ad.title;
+
+      if (!ad.owner) {
+        throw new Error("Ad owner cannot be empty.");
+      }
       this.owner = ad.owner;
       if (ad.description) {
         this.description = ad.description;
@@ -58,8 +65,14 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async saveNewAd(adData: any): Promise<Ad> {
+  static async saveNewAd(
+    adData: Partial<Ad> & { categoryId?: number }
+  ): Promise<Ad> {
     const newAd = new Ad(adData);
+    if (adData.categoryId) {
+      const category = await Category.getCategoryById(adData.categoryId);
+      newAd.category = category;
+    }
     const savedAd = await newAd.save();
     console.log(`New ad saved: ${savedAd.getStringRepresentation()}.`);
     return savedAd;
@@ -70,7 +83,7 @@ class Ad extends BaseEntity {
     return ads;
   }
 
-  static async getAd(id: number): Promise<Ad> {
+  static async getAdById(id: number): Promise<Ad> {
     const ad = await Ad.findOneBy({ id });
     if (!ad) {
       throw new Error(`Ad with ID ${id} does not exist.`);
@@ -86,7 +99,7 @@ class Ad extends BaseEntity {
   }
 
   static async updateAd(id: number, partialAd: Partial<Ad>): Promise<Ad> {
-    const ad = await Ad.getAd(id);
+    const ad = await Ad.getAdById(id);
     await Ad.update(id, partialAd);
     await ad.reload();
     return ad;
