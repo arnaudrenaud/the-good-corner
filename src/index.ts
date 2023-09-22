@@ -3,6 +3,7 @@ import { Database } from "sqlite3";
 import { DataSource } from "typeorm";
 
 import Ad, { TypeAd } from "./entities/ad";
+import { isError } from "./utils";
 
 const db = new Database("db.sqlite");
 
@@ -63,15 +64,17 @@ server.get("/ads/:id", (request, response) => {
 });
 
 // DELETE /ads/:id
-server.delete("/ads/:id", (request, response) => {
+server.delete("/ads/:id", async (request, response) => {
   const id = parseInt(request.params.id);
-  db.run("DELETE FROM Ad WHERE id = ?", [id], function (err) {
-    if (err) {
-      console.error(err.message);
-      return response.sendStatus(500);
-    }
+
+  try {
+    await Ad.deleteAd(id);
     return response.json({ id });
-  });
+  } catch (error) {
+    if (isError(error)) {
+      return response.status(404).json({ error: error.message });
+    }
+  }
 });
 
 // PUT /ads/:id
