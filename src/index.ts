@@ -45,22 +45,17 @@ server.post("/ads", async (request, response) => {
 });
 
 // GET /ads/:id
-server.get("/ads/:id", (request, response) => {
-  const id = request.params.id;
+server.get("/ads/:id", async (request, response) => {
+  const id = parseInt(request.params.id);
 
-  db.get("SELECT * FROM Ad WHERE id = ?", [id], (err, ad) => {
-    if (err) {
-      console.error(err.message);
-      return response.sendStatus(500);
+  try {
+    const ad = await Ad.getAd(id);
+    return response.json({ ad });
+  } catch (error) {
+    if (isError(error)) {
+      return response.status(404).json({ error: error.message });
     }
-
-    if (ad) {
-      return response.json({ ad });
-    } else {
-      //404 : la ressource n'existe pas
-      return response.sendStatus(404);
-    }
-  });
+  }
 });
 
 // DELETE /ads/:id

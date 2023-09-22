@@ -76,6 +76,14 @@ class Ad extends BaseEntity implements TypeAd {
     return ads;
   }
 
+  static async getAd(id: number): Promise<Ad> {
+    const ad = await Ad.findOneBy({ id });
+    if (!ad) {
+      throw new Error(`Ad with ID ${id} does not exist.`);
+    }
+    return ad;
+  }
+
   static async deleteAd(id: number): Promise<void> {
     const { affected } = await Ad.delete(id);
     if (affected === 0) {
