@@ -84,7 +84,11 @@ server.put("/ads/:id", async (request, response) => {
   }
 });
 
-// TODO: GET /tags
+server.get("/tags", async (request, response) => {
+  const tags = await Tag.getTags();
+  return response.json({ tags });
+});
+
 // TODO: POST /tags
 // TODO: faire en sorte qu'on puisse ajouter des Tags quand on crée une Ad
 // TODO: faire en sorte qu'on puisse modifier les Tags quand on modifie une Ad

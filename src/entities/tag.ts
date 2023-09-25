@@ -17,6 +17,11 @@ class Tag extends BaseEntity {
 
   @ManyToMany(() => Ad, (ad) => ad.tags)
   ads!: Ad[];
+
+  static async getTags(): Promise<Tag[]> {
+    const tags = await Tag.find();
+    return tags;
+  }
 }
 
 export default Tag;
