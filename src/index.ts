@@ -30,8 +30,14 @@ server.get("/ads", async (request, response) => {
 // POST /ads
 server.post("/ads", async (request, response) => {
   const adData = request.body;
-  const savedAd = await Ad.saveNewAd(adData);
-  return response.status(201).json({ ad: savedAd });
+  try {
+    const savedAd = await Ad.saveNewAd(adData);
+    return response.status(201).json({ ad: savedAd });
+  } catch (error) {
+    if (isError(error)) {
+      return response.status(400).json({ error: error.message });
+    }
+  }
 });
 
 // GET /ads/:id
