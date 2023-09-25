@@ -119,14 +119,20 @@ class Ad extends BaseEntity {
 
   static async updateAd(
     id: number,
-    partialAd: Partial<Ad> & { category?: number }
+    partialAd: Partial<Ad> & { category?: number; tags?: number[] }
   ): Promise<Ad> {
     const ad = await Ad.getAdById(id);
+    Object.assign(ad, partialAd);
+
     if (partialAd.category) {
       await Category.getCategoryById(partialAd.category);
     }
-    await Ad.update(id, partialAd);
-    await ad.reload();
+    if (partialAd.tags) {
+      ad.tags = await Promise.all(partialAd.tags.map(Tag.getTagById));
+    }
+
+    await ad.save();
+    ad.reload();
     return ad;
   }
 

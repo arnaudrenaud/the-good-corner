@@ -107,9 +107,6 @@ server.post("/tags", async (request, response) => {
   }
 });
 
-// TODO: faire en sorte qu'on puisse ajouter des Tags quand on crée une Ad
-// TODO: faire en sorte qu'on puisse modifier les Tags quand on modifie une Ad
-
 const PORT = 4000;
 server.listen(PORT, async () => {
   await dataSource.initialize();
