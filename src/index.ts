@@ -89,7 +89,18 @@ server.get("/tags", async (request, response) => {
   return response.json({ tags });
 });
 
-// TODO: POST /tags
+server.post("/tags", async (request, response) => {
+  const tagData = request.body;
+  try {
+    const savedTag = await Tag.saveNewTag(tagData);
+    return response.status(201).json({ tag: savedTag });
+  } catch (error) {
+    if (isError(error)) {
+      return response.status(400).json({ error: error.message });
+    }
+  }
+});
+
 // TODO: faire en sorte qu'on puisse ajouter des Tags quand on crée une Ad
 // TODO: faire en sorte qu'on puisse modifier les Tags quand on modifie une Ad
 

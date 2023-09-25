@@ -18,9 +18,43 @@ class Tag extends BaseEntity {
   @ManyToMany(() => Ad, (ad) => ad.tags)
   ads!: Ad[];
 
+  constructor(tag?: Partial<Tag>) {
+    super();
+
+    if (tag) {
+      if (!tag.name) {
+        throw new Error("Tag name cannot be empty.");
+      }
+      this.name = tag.name;
+    }
+  }
+
   static async getTags(): Promise<Tag[]> {
     const tags = await Tag.find();
     return tags;
+  }
+
+  private static async getTagByName(name: string): Promise<Tag | null> {
+    const tag = await Tag.findOneBy({ name });
+    return tag;
+  }
+
+  static async saveNewTag(tagData: Partial<Tag>): Promise<Tag> {
+    if (!tagData.name) {
+      throw new Error("Tag name cannot be empty.");
+    }
+    const existingTag = await Tag.getTagByName(tagData.name);
+    if (existingTag) {
+      throw Error(`Tag with name "${tagData.name}" already exists.`);
+    }
+    const newTag = new Tag(tagData);
+    const savedTag = await newTag.save();
+    console.log(`New tag saved: ${savedTag.getStringRepresentation()}.`);
+    return savedTag;
+  }
+
+  getStringRepresentation(): string {
+    return `${this.id} | ${this.name}`;
   }
 }
 
