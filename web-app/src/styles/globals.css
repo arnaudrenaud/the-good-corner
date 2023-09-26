@@ -197,3 +197,19 @@ h1 {
   background-color: lightgray;
   border: none;
 }
+
+.form {
+  display: grid;
+  width: 100%;
+  gap: 16px;
+}
+
+.form-label-with-field {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+}
+
+.text-area {
+  resize: vertical;
+}

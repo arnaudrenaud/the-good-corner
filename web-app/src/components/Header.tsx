@@ -3,7 +3,7 @@ import NavigationLinkToCategory from "./NavigationLinkToCategory";
 import { CATEGORIES } from "./Layout";
 import Link from "next/link";
 import SearchIcon from "./Icons/SearchIcon";
-import PrimaryButton from "./Button";
+import PrimaryButton from "./PrimaryButton";
 
 export default function Header() {
   return (
@@ -21,10 +21,10 @@ export default function Header() {
             <SearchIcon />
           </PrimaryButton>
         </form>
-        <a href="/post-ad" className="button link-button">
+        <Link href="/publish-article" className="button link-button">
           <span className="mobile-short-label">Publier</span>
           <span className="desktop-long-label">Publier une annonce</span>
-        </a>
+        </Link>
       </div>
       <nav className="categories-navigation">
         {CATEGORIES.map((category, index) => (
