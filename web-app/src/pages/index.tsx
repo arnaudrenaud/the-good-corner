@@ -16,6 +16,7 @@ export default function Home() {
       <section className="recent-ads">
         {ARTICLES.map((article) => (
           <ArticleCard
+            key={article.id}
             id={article.id}
             name={article.name}
             price={article.price}
