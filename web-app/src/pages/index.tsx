@@ -1,9 +1,22 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { NavigationLinkToCategory } from "../components/NavigationLinkToCategory";
+import { Fragment } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const CATEGORIES = [
+  { id: 1, name: "Ameublement" },
+  { id: 2, name: "Électroménager" },
+  { id: 3, name: "Photographie" },
+  { id: 4, name: "Informatique" },
+  { id: 5, name: "Téléphonie" },
+  { id: 6, name: "Vélos" },
+  { id: 7, name: "Véhicules" },
+  { id: 8, name: "Sport" },
+  { id: 9, name: "Habillement" },
+  { id: 10, name: "Bébé" },
+  { id: 11, name: "Outillage" },
+  { id: 12, name: "Services" },
+  { id: 13, name: "Vacances" },
+];
 
 export default function Home() {
   return (
@@ -49,57 +62,12 @@ export default function Home() {
           </a>
         </div>
         <nav className="categories-navigation">
-          <a href="" className="category-navigation-link">
-            Ameublement
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Électroménager
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Photographie
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Informatique
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Téléphonie{" "}
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Vélos
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Véhicules
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Sport
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Habillement
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Bébé
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Outillage
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Services{" "}
-          </a>{" "}
-          •
-          <a href="" className="category-navigation-link">
-            Vacances
-          </a>
+          {CATEGORIES.map((category, index) => (
+            <Fragment key={category.id}>
+              <NavigationLinkToCategory id={category.id} name={category.name} />
+              {index < CATEGORIES.length - 1 ? " • " : ""}
+            </Fragment>
+          ))}
         </nav>
       </header>
       <main className="main-content">
