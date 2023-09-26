@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function NavigationLinkToCategory({
+export default function NavigationLinkToCategory({
   id,
   name,
 }: {
