@@ -7,10 +7,12 @@ export default function ArticleCard({
   id,
   name,
   price,
+  currency,
 }: {
   id: number;
   name: string;
   price: number;
+  currency: "EURO" | "DOLLAR";
 }) {
   return (
     <styled.Container>
@@ -18,7 +20,9 @@ export default function ArticleCard({
         <styled.Image src={`/images/${id}.webp`} />
         <styled.Text>
           <styled.Title>{name}</styled.Title>
-          <styled.Price>{price} €</styled.Price>
+          <styled.Price>
+            {price} {currency === "EURO" ? "€" : "$"}
+          </styled.Price>
         </styled.Text>
       </BaseLink>
     </styled.Container>
