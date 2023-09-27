@@ -1,19 +1,11 @@
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 import { CardGrid } from "@/components/CardGrid/CardGrid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckboxLabel";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import Modal from "@/components/Modal/Modal";
-
-const ARTICLES = [
-  { id: 1, name: "Table", price: 120 },
-  { id: 2, name: "Dame-jeanne", price: 75 },
-  { id: 3, name: "Vide-poche", price: 4 },
-  { id: 4, name: "Vaisselier", price: 900 },
-  { id: 5, name: "Bougie", price: 8 },
-  { id: 6, name: "Porte-magazine", price: 45 },
-];
+import { Article } from "@/types";
 
 const DOLLAR_IN_EURO = 1.06;
 
@@ -29,6 +21,7 @@ const MainContentTitle = styled.h2`
 export default function Home() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [articles, setArticles] = useState<Article[] | null>(null);
 
   function toggleCurrency() {
     return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
@@ -38,11 +31,15 @@ export default function Home() {
     return setIsModalOpen(!isModalOpen);
   }
 
-  // récupérer la liste des articles depuis le serveur au montage du composant, puis l'afficher
-  // useEffect au montage
-  // fetch(…)
+  useEffect(() => {
+    const fetchAds = async () => {
+      const response = await fetch("/api/ads");
+      const { ads } = (await response.json()) as { ads: Article[] };
+      setArticles(ads);
+    };
 
-  // bonus : afficher un témoin de chargement tant qu'on n'a pas récupéré les articles
+    fetchAds();
+  }, []);
 
   return (
     <Container>
@@ -53,19 +50,21 @@ export default function Home() {
       </CheckboxLabel>
       <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
       <CardGrid>
-        {ARTICLES.map((article) => (
-          <ArticleCard
-            key={article.id}
-            id={article.id}
-            name={article.name}
-            price={
-              currency === "EURO"
-                ? article.price
-                : article.price * DOLLAR_IN_EURO
-            }
-            currency={currency}
-          />
-        ))}
+        {articles
+          ? articles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                id={article.id}
+                name={article.title}
+                price={
+                  currency === "EURO"
+                    ? article.price
+                    : article.price * DOLLAR_IN_EURO
+                }
+                currency={currency}
+              />
+            ))
+          : "Chargement des annonces…"}
       </CardGrid>
       {isModalOpen && <Modal onClose={toggleModal}>Contenu de la modale</Modal>}
     </Container>
