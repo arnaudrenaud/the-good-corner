@@ -2,8 +2,9 @@ import { ButtonLikeLink } from "../Link/ButtonLikeLink";
 import { MailIcon } from "../Icons/MailIcon";
 
 import * as styled from "./ArticleDetails.styled";
+import { Separator } from "../Separator/Separator";
 
-export default function ArticleDetails() {
+export default function Container() {
   return (
     <>
       <h2>Table</h2>
@@ -22,7 +23,7 @@ export default function ArticleDetails() {
             adipisci, aliquam nulla unde quam architecto eligendi, voluptatum,
             perspiciatis laudantium sed eos voluptates?
           </div>
-          <hr className="separator" />
+          <Separator />
           <div>
             Annoncée publiée par <b>Serge</b> aujourd'hui (9:32).
           </div>
