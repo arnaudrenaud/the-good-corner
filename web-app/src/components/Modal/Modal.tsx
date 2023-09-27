@@ -1,10 +1,16 @@
 import { ReactNode } from "react";
 import * as styled from "./Modal.styled";
 
-const Modal = ({ children }: { children: ReactNode }) => {
+const Modal = ({
+  children,
+  onClose,
+}: {
+  children: ReactNode;
+  onClose: () => void;
+}) => {
   return (
     <>
-      <styled.ModalOverlay />
+      <styled.ModalOverlay onClick={onClose} />
       <styled.Modal aria-modal>{children}</styled.Modal>
     </>
   );

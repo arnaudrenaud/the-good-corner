@@ -4,6 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckboxLabel";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
+import Modal from "@/components/Modal/Modal";
 
 const ARTICLES = [
   { id: 1, name: "Table", price: 120 },
@@ -27,9 +28,14 @@ const MainContentTitle = styled.h2`
 
 export default function Home() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function toggleCurrency() {
     return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
+  }
+
+  function toggleModal() {
+    return setIsModalOpen(!isModalOpen);
   }
 
   return (
@@ -39,7 +45,7 @@ export default function Home() {
         <input type="checkbox" onChange={toggleCurrency} />
         Afficher les prix en dollars
       </CheckboxLabel>
-      <PrimaryButton>Afficher la modale</PrimaryButton>
+      <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
       <CardGrid>
         {ARTICLES.map((article) => (
           <ArticleCard
@@ -55,6 +61,7 @@ export default function Home() {
           />
         ))}
       </CardGrid>
+      {isModalOpen && <Modal onClose={toggleModal}>Contenu de la modale</Modal>}
     </Container>
   );
 }
