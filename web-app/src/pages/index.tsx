@@ -3,6 +3,7 @@ import { CardGrid } from "@/components/CardGrid/CardGrid";
 import { useState } from "react";
 import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckboxLabel";
+import { PrimaryButton } from "@/components/Button/PrimaryButton";
 
 const ARTICLES = [
   { id: 1, name: "Table", price: 120 },
@@ -15,8 +16,13 @@ const ARTICLES = [
 
 const DOLLAR_IN_EURO = 1.06;
 
-const Checkbox = styled.input`
-  margin: 6px 0 12px;
+const Container = styled.div`
+  display: grid;
+  gap: 12px;
+`;
+
+const MainContentTitle = styled.h2`
+  margin: 0 0 4px;
 `;
 
 export default function Home() {
@@ -27,12 +33,13 @@ export default function Home() {
   }
 
   return (
-    <>
-      <h2>Annonces récentes</h2>
+    <Container>
+      <MainContentTitle>Annonces récentes</MainContentTitle>
       <CheckboxLabel>
-        <Checkbox type="checkbox" onChange={toggleCurrency} />
+        <input type="checkbox" onChange={toggleCurrency} />
         Afficher les prix en dollars
       </CheckboxLabel>
+      <PrimaryButton>Afficher la modale</PrimaryButton>
       <CardGrid>
         {ARTICLES.map((article) => (
           <ArticleCard
@@ -48,6 +55,6 @@ export default function Home() {
           />
         ))}
       </CardGrid>
-    </>
+    </Container>
   );
 }
