@@ -38,6 +38,12 @@ export default function Home() {
     return setIsModalOpen(!isModalOpen);
   }
 
+  // récupérer la liste des articles depuis le serveur au montage du composant, puis l'afficher
+  // useEffect au montage
+  // fetch(…)
+
+  // bonus : afficher un témoin de chargement tant qu'on n'a pas récupéré les articles
+
   return (
     <Container>
       <MainContentTitle>Annonces récentes</MainContentTitle>
