@@ -1,4 +1,5 @@
-import ArticleCard from "@/components/ArticleCard";
+import ArticleCard from "@/components/ArticleCard/ArticleCard";
+import { CardGrid } from "@/components/CardGrid/CardGrid";
 
 const ARTICLES = [
   { id: 1, name: "Table", price: 120 },
@@ -11,9 +12,9 @@ const ARTICLES = [
 
 export default function Home() {
   return (
-    <main className="main-content">
+    <>
       <h2>Annonces récentes</h2>
-      <section className="recent-ads">
+      <CardGrid>
         {ARTICLES.map((article) => (
           <ArticleCard
             key={article.id}
@@ -22,7 +23,7 @@ export default function Home() {
             price={article.price}
           />
         ))}
-      </section>
-    </main>
+      </CardGrid>
+    </>
   );
 }

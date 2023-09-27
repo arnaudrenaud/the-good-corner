@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import Head from "next/head";
 
-import Header from "./Header";
+import Header from "../Header/Header";
+import { MainContent } from "./Layout.styled";
 
 export const CATEGORIES = [
   { id: 1, name: "Ameublement" },
@@ -32,7 +33,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div>{children}</div>
+      <MainContent>{children}</MainContent>
     </>
   );
 }

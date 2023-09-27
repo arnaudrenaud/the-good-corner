@@ -1,44 +1,48 @@
-import PrimaryButton from "@/components/PrimaryButton";
+import { PrimaryButton } from "@/components/Button/PrimaryButton";
+import { Form } from "@/components/FormElements/Form/Form";
+import {
+  FormLabelWithField,
+  TextArea,
+  TextField,
+} from "@/components/FormElements/Input/Input";
 import React from "react";
 
-function PublishArticle() {
+export default function PublishArticle() {
   const createArticle = () => {
     // call POST /articles on API
   };
 
   return (
-    <main className="main-content">
-      <form
+    <>
+      <Form
         className="form"
         onSubmit={(event) => {
           event.preventDefault();
           createArticle();
         }}
       >
-        <label className="form-label-with-field">
+        <FormLabelWithField>
           Photo
-          <input className="text-field" type="file" />
-        </label>
-        <label className="form-label-with-field">
+          <TextField type="file" />
+        </FormLabelWithField>
+        <FormLabelWithField>
           Titre
-          <input className="text-field" type="text" required minLength={4} />
-        </label>
-        <label className="form-label-with-field">
+          <TextField type="text" required minLength={4} />
+        </FormLabelWithField>
+        <FormLabelWithField>
           Prix
-          <input className="text-field" type="number" required min={0} />
-        </label>
-        <label className="form-label-with-field">
+          <TextField type="number" required min={0} />
+        </FormLabelWithField>
+        <FormLabelWithField>
           Description
-          <textarea className="text-field text-area" />
-        </label>
-        <label className="form-label-with-field">
+          <TextArea />
+        </FormLabelWithField>
+        <FormLabelWithField>
           Propriétaire
-          <input className="text-field" type="email" required />
-        </label>
+          <TextField type="email" required />
+        </FormLabelWithField>
         <PrimaryButton>Publier l'annonce</PrimaryButton>
-      </form>
-    </main>
+      </Form>
+    </>
   );
 }
-
-export default PublishArticle;
