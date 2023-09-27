@@ -7,6 +7,7 @@ import * as styled from "./Header.styled";
 import { ButtonLikeLink, Logo } from "../Link/ButtonLikeLink";
 import { MainSearchField } from "../FormElements/Input/Input";
 import { BaseLink } from "../Link/BaseLink";
+import ResponsiveLabel from "../ResponsiveLabel/ResponsiveLabel";
 
 export default function Header() {
   return (
@@ -14,8 +15,7 @@ export default function Header() {
       <styled.MainMenu>
         <styled.MainTitle>
           <Logo href="/">
-            <span className="mobile-short-label">TGC</span>
-            <span className="desktop-long-label">THE GOOD CORNER</span>
+            <ResponsiveLabel mobileLabel="TGC" desktopLabel="THE GOOD CORNER" />
           </Logo>
         </styled.MainTitle>
         <styled.TextFieldWithButton>
@@ -25,8 +25,10 @@ export default function Header() {
           </PrimaryButton>
         </styled.TextFieldWithButton>
         <ButtonLikeLink href="/publish-article">
-          <span className="mobile-short-label">Publier</span>
-          <span className="desktop-long-label">Publier une annonce</span>
+          <ResponsiveLabel
+            mobileLabel="Publier"
+            desktopLabel="Publier une annonce"
+          />
         </ButtonLikeLink>
       </styled.MainMenu>
       <styled.CategoriesNavigation>
