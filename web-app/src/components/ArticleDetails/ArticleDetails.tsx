@@ -10,10 +10,7 @@ export default function Container() {
       <h2>Table</h2>
       <styled.Container>
         <styled.ImageContainer>
-          <styled.Image
-            className="article-details-image"
-            src={`/images/1.webp`}
-          />
+          <styled.Image src={`/images/1.webp`} />
         </styled.ImageContainer>
         <styled.Info>
           <styled.Price>120 €</styled.Price>

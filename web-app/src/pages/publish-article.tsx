@@ -15,7 +15,6 @@ export default function PublishArticle() {
   return (
     <>
       <Form
-        className="form"
         onSubmit={(event) => {
           event.preventDefault();
           createArticle();
