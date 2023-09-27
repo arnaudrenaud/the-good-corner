@@ -20,12 +20,12 @@ export const TextField = styled.input`
   ${textFieldStyle}
 `;
 
-// export const MainSearchField = …
-
-//   width: 100%;
-//   min-width: 120px;
-//   max-width: 360px;
-//   flex-grow: 1;
+export const MainSearchField = styled(TextField)`
+  width: 100%;
+  min-width: 120px;
+  max-width: 360px;
+  flex-grow: 1;
+`;
 
 export const TextArea = styled.textarea`
   ${textFieldStyle}

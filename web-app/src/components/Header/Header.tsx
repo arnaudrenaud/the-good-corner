@@ -5,7 +5,7 @@ import { PrimaryButton } from "../Button/PrimaryButton";
 
 import * as styled from "./Header.styled";
 import { ButtonLikeLink, Logo } from "../Link/ButtonLikeLink";
-import { TextField } from "../FormElements/Input/Input";
+import { MainSearchField } from "../FormElements/Input/Input";
 import { BaseLink } from "../Link/BaseLink";
 
 export default function Header() {
@@ -19,7 +19,7 @@ export default function Header() {
           </Logo>
         </styled.MainTitle>
         <styled.TextFieldWithButton>
-          <TextField type="search" />
+          <MainSearchField type="search" />
           <PrimaryButton>
             <SearchIcon />
           </PrimaryButton>
