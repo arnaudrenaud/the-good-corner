@@ -37,7 +37,7 @@ export default function PublishArticlePage() {
     const { ad } = await response.json();
 
     if (response.ok && ad.id) {
-      router.push(`/articles/${ad.id}`);
+      router.push(`/articles/${ad.id}?publishConfirmation=true`);
     }
   };
 
