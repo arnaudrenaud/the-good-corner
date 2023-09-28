@@ -5,6 +5,7 @@ import {
   TextArea,
   TextField,
 } from "@/components/FormElements/Input/Input";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 type PublishArticleFormData = {
@@ -21,17 +22,23 @@ export default function PublishArticlePage() {
     description: "",
     owner: "",
   });
+  const router = useRouter();
 
   const updateFormData = (partialFormData: Partial<PublishArticleFormData>) => {
     setFormData({ ...formData, ...partialFormData });
   };
 
   const createArticle = async () => {
-    await fetch("/api/ads", {
+    const response = await fetch("/api/ads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
+    const { ad } = await response.json();
+
+    if (response.ok && ad.id) {
+      router.push(`/articles/${ad.id}`);
+    }
   };
 
   return (
