@@ -18,7 +18,7 @@ const MainContentTitle = styled.h2`
   margin: 0 0 4px;
 `;
 
-export default function Home() {
+export default function HomePage() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articles, setArticles] = useState<Article[] | null>(null);

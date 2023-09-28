@@ -7,7 +7,7 @@ import {
 } from "@/components/FormElements/Input/Input";
 import React from "react";
 
-export default function PublishArticle() {
+export default function PublishArticlePage() {
   const createArticle = () => {
     // call POST /articles on API
   };

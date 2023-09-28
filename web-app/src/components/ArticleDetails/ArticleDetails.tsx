@@ -3,28 +3,31 @@ import { MailIcon } from "../Icons/MailIcon";
 
 import * as styled from "./ArticleDetails.styled";
 import { Separator } from "../Separator/Separator";
+import { Article } from "@/types";
 
-export default function Container() {
+export default function ArticleDetails({
+  id,
+  title,
+  price,
+  description,
+  owner,
+  createdAt,
+}: Article) {
   return (
     <>
-      <h2>Table</h2>
+      <h2>{title}</h2>
       <styled.Container>
         <styled.ImageContainer>
-          <styled.Image src={`/images/1.webp`} />
+          <styled.Image src={`/images/${id}.webp`} />
         </styled.ImageContainer>
         <styled.Info>
-          <styled.Price>120 €</styled.Price>
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, iusto!
-            Voluptates repudiandae asperiores quia. Blanditiis repellat minima
-            adipisci, aliquam nulla unde quam architecto eligendi, voluptatum,
-            perspiciatis laudantium sed eos voluptates?
-          </div>
+          <styled.Price>{price} €</styled.Price>
+          <div>{description}</div>
           <Separator />
           <div>
-            Annoncée publiée par <b>Serge</b> aujourd'hui (9:32).
+            Annoncée publiée par <b>{owner}</b>.
           </div>
-          <ButtonLikeLink href="mailto:serge@serge.com">
+          <ButtonLikeLink href={`mailto:${owner}`}>
             <MailIcon />
             Envoyer un email
           </ButtonLikeLink>
