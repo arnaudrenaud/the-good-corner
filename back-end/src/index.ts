@@ -22,6 +22,7 @@ server.get("/", (request, response) => {
 });
 
 // GET /ads
+// exemple de requête : /ads?category=1
 server.get("/ads", async (request, response) => {
   const ads = await Ad.getAds();
   return response.json({ ads });
@@ -110,9 +111,22 @@ server.post("/tags", async (request, response) => {
 const PORT = 4000;
 server.listen(PORT, async () => {
   await dataSource.initialize();
-  await Category.saveNewCategoryIfNotExisting({ name: "Automobile" });
-  await Category.saveNewCategoryIfNotExisting({ name: "Habillement" });
-  await Category.saveNewCategoryIfNotExisting({ name: "Autre" });
+  await Category.saveNewCategoryIfNotExisting({ id: 1, name: "Ameublement" });
+  await Category.saveNewCategoryIfNotExisting({
+    id: 2,
+    name: "Électroménager",
+  });
+  await Category.saveNewCategoryIfNotExisting({ id: 3, name: "Photographie" });
+  await Category.saveNewCategoryIfNotExisting({ id: 4, name: "Informatique" });
+  await Category.saveNewCategoryIfNotExisting({ id: 5, name: "Téléphonie" });
+  await Category.saveNewCategoryIfNotExisting({ id: 6, name: "Vélos" });
+  await Category.saveNewCategoryIfNotExisting({ id: 7, name: "Véhicules" });
+  await Category.saveNewCategoryIfNotExisting({ id: 8, name: "Sport" });
+  await Category.saveNewCategoryIfNotExisting({ id: 9, name: "Habillement" });
+  await Category.saveNewCategoryIfNotExisting({ id: 10, name: "Bébé" });
+  await Category.saveNewCategoryIfNotExisting({ id: 11, name: "Outillage" });
+  await Category.saveNewCategoryIfNotExisting({ id: 12, name: "Services" });
+  await Category.saveNewCategoryIfNotExisting({ id: 13, name: "Vacances" });
 
   console.log(`Server listening on port ${PORT}.`);
 });
