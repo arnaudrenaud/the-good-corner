@@ -1,3 +1,4 @@
+import { TRANSPARENT_BACKGROUND } from "@/styles/constants";
 import styled from "styled-components";
 
 export const ModalContainer = styled.div`
@@ -11,8 +12,7 @@ export const ModalOverlay = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: black;
-  opacity: 0.5;
+  ${TRANSPARENT_BACKGROUND}
 `;
 
 export const Modal = styled.div`

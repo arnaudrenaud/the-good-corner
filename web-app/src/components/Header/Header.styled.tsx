@@ -13,6 +13,7 @@ export const Header = styled.header`
   border-bottom: 1px solid lightgray;
   padding: 10px;
   background-color: white;
+  z-index: 2;
 `;
 
 export const MainMenu = styled.div`

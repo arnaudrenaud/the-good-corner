@@ -7,6 +7,7 @@ import { Article } from "@/types";
 import Modal from "@/components/Modal/Modal";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import ArticleDetails from "@/components/ArticleDetails/ArticleDetails";
+import Loader from "@/components/Loader/Loader";
 
 const AlertBox = styled.div`
   padding: 8px;
@@ -63,6 +64,6 @@ export default function ArticlePage() {
       )}
     </>
   ) : (
-    "Chargement de l'article…"
+    <Loader global />
   );
 }

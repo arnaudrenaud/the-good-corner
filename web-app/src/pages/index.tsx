@@ -6,6 +6,7 @@ import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/Checkbox
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import Modal from "@/components/Modal/Modal";
 import { Article } from "@/types";
+import Loader from "@/components/Loader/Loader";
 
 const DOLLAR_IN_EURO = 1.06;
 
@@ -50,21 +51,23 @@ export default function HomePage() {
       </CheckboxLabel>
       <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
       <CardGrid>
-        {articles
-          ? articles.map((article) => (
-              <ArticleCard
-                key={article.id}
-                id={article.id}
-                name={article.title}
-                price={
-                  currency === "EURO"
-                    ? article.price
-                    : article.price * DOLLAR_IN_EURO
-                }
-                currency={currency}
-              />
-            ))
-          : "Chargement des annonces…"}
+        {articles ? (
+          articles.map((article) => (
+            <ArticleCard
+              key={article.id}
+              id={article.id}
+              name={article.title}
+              price={
+                currency === "EURO"
+                  ? article.price
+                  : article.price * DOLLAR_IN_EURO
+              }
+              currency={currency}
+            />
+          ))
+        ) : (
+          <Loader global />
+        )}
       </CardGrid>
       {isModalOpen && <Modal onClose={toggleModal}>Contenu de la modale</Modal>}
     </Container>
