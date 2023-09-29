@@ -5,6 +5,9 @@ import {
   TextArea,
   TextField,
 } from "@/components/FormElements/Input/Input";
+import Loader from "@/components/Loader/Loader";
+import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
+import { PageContainer } from "@/components/PageContainer/PageContainer";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -22,6 +25,9 @@ export default function PublishArticlePage() {
     description: "",
     owner: "",
   });
+  const [submissionStatus, setSubmissionStatus] = useState<
+    "IDLE" | "LOADING" | "ERROR" | "SUCCESS"
+  >("IDLE");
   const router = useRouter();
 
   const updateFormData = (partialFormData: Partial<PublishArticleFormData>) => {
@@ -29,6 +35,8 @@ export default function PublishArticlePage() {
   };
 
   const createArticle = async () => {
+    setSubmissionStatus("LOADING");
+
     const response = await fetch("/api/ads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -37,12 +45,16 @@ export default function PublishArticlePage() {
     const { ad } = await response.json();
 
     if (response.ok && ad.id) {
+      setSubmissionStatus("SUCCESS");
       router.push(`/articles/${ad.id}?publishConfirmation=true`);
+    } else {
+      setSubmissionStatus("ERROR");
     }
   };
 
   return (
-    <>
+    <PageContainer>
+      <MainContentTitle>Publier une annonce</MainContentTitle>
       <Form
         onSubmit={(event) => {
           event.preventDefault();
@@ -93,8 +105,14 @@ export default function PublishArticlePage() {
             }}
           />
         </FormLabelWithField>
-        <PrimaryButton>Publier l'annonce</PrimaryButton>
+        <PrimaryButton disabled={submissionStatus === "LOADING"}>
+          {submissionStatus === "LOADING" ? (
+            <Loader size="SMALL" onBackground={true} />
+          ) : (
+            "Publier l'annonce"
+          )}
+        </PrimaryButton>
       </Form>
-    </>
+    </PageContainer>
   );
 }
