@@ -38,5 +38,4 @@ export const GlobalLoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${TRANSPARENT_BACKGROUND}
 `;
