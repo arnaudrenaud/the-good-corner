@@ -22,9 +22,12 @@ server.get("/", (request, response) => {
 });
 
 // GET /ads
-// exemple de requête : /ads?category=1
+// exemple de requête : /ads, /ads?category=1
 server.get("/ads", async (request, response) => {
-  const ads = await Ad.getAds();
+  const { query } = request;
+  const ads = await Ad.getAds(
+    query.category ? parseInt(query.category as string) : undefined
+  );
   return response.json({ ads });
 });
 

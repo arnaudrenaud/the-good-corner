@@ -7,12 +7,12 @@ export default function ArticleCard({
   id,
   name,
   price,
-  currency,
+  currency = "EURO",
 }: {
   id: number;
   name: string;
   price: number;
-  currency: "EURO" | "DOLLAR";
+  currency?: "EURO" | "DOLLAR";
 }) {
   return (
     <styled.Container>
