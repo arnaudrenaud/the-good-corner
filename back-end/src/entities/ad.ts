@@ -96,7 +96,10 @@ class Ad extends BaseEntity {
   }
 
   static async getAds(categoryId?: number): Promise<Ad[]> {
-    const ads = await Ad.find({ where: { category: { id: categoryId } } });
+    const ads = await Ad.find({
+      where: { category: { id: categoryId } },
+      order: { createdAd: "DESC" },
+    });
     return ads;
   }
 
