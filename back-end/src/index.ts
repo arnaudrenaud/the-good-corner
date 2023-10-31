@@ -9,25 +9,8 @@ import Tag from "./entities/tag";
 
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { Arg, Mutation, Query, Resolver, buildSchema } from "type-graphql";
-
-@Resolver()
-class AdResolver {
-  @Query(() => [Ad])
-  ads(@Arg("category", { nullable: true }) category: number) {
-    return Ad.getAds(category ?? undefined);
-  }
-
-  @Query(() => Ad)
-  ad() {
-    //...
-  }
-
-  @Mutation(() => Ad)
-  createAd() {
-    //...
-  }
-}
+import { buildSchema } from "type-graphql";
+import { AdResolver } from "./resolvers/AdResolver";
 
 const startApolloServer = async () => {
   const schema = await buildSchema({ resolvers: [AdResolver] });
