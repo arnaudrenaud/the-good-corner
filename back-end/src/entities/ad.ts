@@ -49,10 +49,12 @@ class Ad extends BaseEntity {
   createdAd!: Date;
 
   @ManyToOne(() => Category, (category) => category.ads, { eager: true })
+  @Field(() => Category)
   category!: Category;
 
   @JoinTable({ name: "TagsForAds" })
   @ManyToMany(() => Tag, (tag) => tag.ads, { eager: true })
+  @Field(() => [Tag])
   tags!: Tag[];
 
   constructor(ad?: Partial<Ad>) {

@@ -6,16 +6,21 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Ad from "./ad";
+import { Field, ID, ObjectType } from "type-graphql";
 
 @Entity()
+@ObjectType()
 class Category extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @Field(() => ID)
   id!: number;
 
   @Column({ unique: true })
+  @Field()
   name!: string;
 
   @OneToMany(() => Ad, (ad) => ad.category)
+  @Field(() => [Ad])
   ads!: Ad[];
 
   constructor(category?: Partial<Category>) {

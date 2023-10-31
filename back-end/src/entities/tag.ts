@@ -6,16 +6,21 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Ad from "./ad";
+import { Field, ID, ObjectType } from "type-graphql";
 
 @Entity()
+@ObjectType()
 class Tag extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @Field(() => ID)
   id!: number;
 
   @Column({ unique: true })
+  @Field()
   name!: string;
 
   @ManyToMany(() => Ad, (ad) => ad.tags)
+  @Field(() => [Ad])
   ads!: Ad[];
 
   constructor(tag?: Partial<Tag>) {
