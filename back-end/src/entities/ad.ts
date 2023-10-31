@@ -8,33 +8,44 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { ObjectType, Field, ID, Float } from "type-graphql";
+
 import Category from "./category";
 import Tag from "./tag";
 
 @Entity()
+@ObjectType()
 class Ad extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @Field(() => ID)
   id!: number;
 
   @Column()
+  @Field()
   title!: string;
 
   @Column({ default: "" })
+  @Field()
   description!: string;
 
   @Column()
+  @Field()
   owner!: string;
 
   @Column({ nullable: true })
+  @Field(() => Float, { nullable: true })
   price!: number;
 
   @Column({ default: "" })
+  @Field()
   picture!: string;
 
   @Column({ default: "" })
+  @Field()
   location!: string;
 
   @CreateDateColumn()
+  @Field()
   createdAd!: Date;
 
   @ManyToOne(() => Category, (category) => category.ads, { eager: true })
