@@ -1,20 +1,30 @@
+import { useEffect, useState } from "react";
+import { useQuery, gql } from "@apollo/client";
+
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 import { CardGrid } from "@/components/CardGrid/CardGrid";
-import { useEffect, useState } from "react";
+import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
+import { PageContainer } from "../components/PageContainer/PageContainer";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckboxLabel";
-import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import Modal from "@/components/Modal/Modal";
 import { Article } from "@/types";
 import Loader from "@/components/Loader/Loader";
-import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
-import { PageContainer } from "../components/PageContainer/PageContainer";
 
 const DOLLAR_IN_EURO = 1.06;
+
+const GET_ADS_HOME_PAGE = gql`
+  query GetAdsHomePage {
+    ads {
+      id
+      title
+      price
+    }
+  }
+`;
 
 export default function HomePage() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [articles, setArticles] = useState<Article[] | null>(null);
 
   function toggleCurrency() {
     return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
@@ -24,15 +34,8 @@ export default function HomePage() {
     return setIsModalOpen(!isModalOpen);
   }
 
-  useEffect(() => {
-    const fetchAds = async () => {
-      const response = await fetch("/api/ads");
-      const { ads } = (await response.json()) as { ads: Article[] };
-      setArticles(ads);
-    };
-
-    fetchAds();
-  }, []);
+  const { data, loading, error } = useQuery(GET_ADS_HOME_PAGE);
+  console.log({ data, loading, error });
 
   return (
     <PageContainer>
@@ -43,7 +46,7 @@ export default function HomePage() {
       </CheckboxLabel>
       {/* <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton> */}
       <CardGrid>
-        {articles ? (
+        {/* {articles ? (
           articles.map((article) => (
             <ArticleCard
               key={article.id}
@@ -59,7 +62,7 @@ export default function HomePage() {
           ))
         ) : (
           <Loader global />
-        )}
+        )} */}
       </CardGrid>
       {isModalOpen && <Modal onClose={toggleModal}>Contenu de la modale</Modal>}
     </PageContainer>
