@@ -8,7 +8,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ObjectType, Field, ID, Float, ArgsType, Int } from "type-graphql";
+import { ObjectType, Field, ID, Float, Int, ArgsType } from "type-graphql";
 
 import Category from "./category";
 import Tag from "./tag";
@@ -131,18 +131,15 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async updateAd(
-    id: string,
-    partialAd: Partial<Ad> & { category?: number; tags?: string[] }
-  ): Promise<Ad> {
+  static async updateAd(id: string, partialAd: UpdateAd): Promise<Ad> {
     const ad = await Ad.getAdById(id);
     Object.assign(ad, partialAd);
 
-    if (partialAd.category) {
-      await Category.getCategoryById(partialAd.category);
+    if (partialAd.categoryId) {
+      ad.category = await Category.getCategoryById(partialAd.categoryId);
     }
-    if (partialAd.tags) {
-      ad.tags = await Promise.all(partialAd.tags.map(Tag.getTagById));
+    if (partialAd.tagIds) {
+      ad.tags = await Promise.all(partialAd.tagIds.map(Tag.getTagById));
     }
 
     await ad.save();
@@ -178,6 +175,33 @@ export class CreateAd {
   location!: string;
 
   @Field(() => Int)
+  categoryId!: number;
+
+  @Field(() => [String], { nullable: true })
+  tagIds!: string[];
+}
+
+@ArgsType()
+export class UpdateAd {
+  @Field({ nullable: true })
+  title!: string;
+
+  @Field({ nullable: true })
+  description!: string;
+
+  @Field({ nullable: true })
+  owner!: string;
+
+  @Field(() => Float, { nullable: true })
+  price!: number;
+
+  @Field({ nullable: true })
+  picture!: string;
+
+  @Field({ nullable: true })
+  location!: string;
+
+  @Field(() => Int, { nullable: true })
   categoryId!: number;
 
   @Field(() => [String], { nullable: true })
