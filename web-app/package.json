@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "graphql-codegen": "graphql-codegen --config graphql-codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
@@ -17,10 +18,12 @@
     "styled-components": "^6.0.8"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "babel-plugin-styled-components": "^2.1.4",
-    "typescript": "latest"
+    "typescript": "latest",
+    "@graphql-codegen/client-preset": "4.1.0"
   }
 }

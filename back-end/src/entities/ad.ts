@@ -39,8 +39,8 @@ class Ad extends BaseEntity {
   @Field()
   owner!: string;
 
-  @Column({ nullable: true })
-  @Field(() => Float, { nullable: true })
+  @Column()
+  @Field(() => Float)
   price!: number;
 
   @Column({ default: "" })
@@ -173,7 +173,7 @@ export class CreateOrUpdateAd {
   @IsEmail()
   owner!: string;
 
-  @Field(() => Float, { nullable: true })
+  @Field(() => Float)
   @Min(0)
   price!: number;
 

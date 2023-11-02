@@ -9,7 +9,7 @@ export default function ArticleCard({
   price,
   currency = "EURO",
 }: {
-  id: number;
+  id: string;
   name: string;
   price: number;
   currency?: "EURO" | "DOLLAR";

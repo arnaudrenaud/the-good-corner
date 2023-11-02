@@ -7,8 +7,8 @@ import { MainContentTitle } from "../components/MainContentTitle/MainContentTitl
 import { PageContainer } from "../components/PageContainer/PageContainer";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckboxLabel";
 import Modal from "@/components/Modal/Modal";
-import { Article } from "@/types";
 import Loader from "@/components/Loader/Loader";
+import { GetAdsHomePageQuery } from "@/gql/graphql";
 
 const DOLLAR_IN_EURO = 1.06;
 
@@ -26,6 +26,8 @@ export default function HomePage() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { data } = useQuery<GetAdsHomePageQuery>(GET_ADS_HOME_PAGE);
+
   function toggleCurrency() {
     return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
   }
@@ -33,9 +35,6 @@ export default function HomePage() {
   function toggleModal() {
     return setIsModalOpen(!isModalOpen);
   }
-
-  const { data, loading, error } = useQuery(GET_ADS_HOME_PAGE);
-  console.log({ data, loading, error });
 
   return (
     <PageContainer>
@@ -46,8 +45,8 @@ export default function HomePage() {
       </CheckboxLabel>
       {/* <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton> */}
       <CardGrid>
-        {/* {articles ? (
-          articles.map((article) => (
+        {data?.ads ? (
+          data.ads.map((article) => (
             <ArticleCard
               key={article.id}
               id={article.id}
@@ -62,7 +61,7 @@ export default function HomePage() {
           ))
         ) : (
           <Loader global />
-        )} */}
+        )}
       </CardGrid>
       {isModalOpen && <Modal onClose={toggleModal}>Contenu de la modale</Modal>}
     </PageContainer>
