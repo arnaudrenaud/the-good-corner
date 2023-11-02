@@ -65,7 +65,7 @@ server.post("/ads", async (request, response) => {
 
 // GET /ads/:id
 server.get("/ads/:id", async (request, response) => {
-  const id = parseInt(request.params.id);
+  const id = request.params.id;
 
   try {
     const ad = await Ad.getAdById(id);
@@ -79,7 +79,7 @@ server.get("/ads/:id", async (request, response) => {
 
 // DELETE /ads/:id
 server.delete("/ads/:id", async (request, response) => {
-  const id = parseInt(request.params.id);
+  const id = request.params.id;
 
   try {
     await Ad.deleteAd(id);
@@ -93,7 +93,7 @@ server.delete("/ads/:id", async (request, response) => {
 
 // PUT /ads/:id
 server.put("/ads/:id", async (request, response) => {
-  const id = parseInt(request.params.id);
+  const id = request.params.id;
   const adData = request.body;
 
   if (adData.title === "") {

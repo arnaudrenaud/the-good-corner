@@ -11,9 +11,9 @@ import { Field, ID, ObjectType } from "type-graphql";
 @Entity()
 @ObjectType()
 class Tag extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
-  id!: number;
+  id!: string;
 
   @Column({ unique: true })
   @Field()
@@ -39,7 +39,7 @@ class Tag extends BaseEntity {
     return tags;
   }
 
-  static async getTagById(id: number): Promise<Tag> {
+  static async getTagById(id: string): Promise<Tag> {
     const tag = await Tag.findOneBy({ id });
     if (!tag) {
       throw new Error(`Tag with ID ${id} does not exist.`);

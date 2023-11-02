@@ -16,9 +16,9 @@ import Tag from "./tag";
 @Entity()
 @ObjectType()
 class Ad extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
-  id!: number;
+  id!: string;
 
   @Column()
   @Field()
@@ -86,7 +86,7 @@ class Ad extends BaseEntity {
   }
 
   static async saveNewAd(
-    adData: Partial<Ad> & { category?: number; tags?: number[] }
+    adData: Partial<Ad> & { category?: number; tags?: string[] }
   ): Promise<Ad> {
     const newAd = new Ad(adData);
     if (adData.category) {
@@ -116,7 +116,7 @@ class Ad extends BaseEntity {
     return ads;
   }
 
-  static async getAdById(id: number): Promise<Ad> {
+  static async getAdById(id: string): Promise<Ad> {
     const ad = await Ad.findOne({
       where: { id },
     });
@@ -126,7 +126,7 @@ class Ad extends BaseEntity {
     return ad;
   }
 
-  static async deleteAd(id: number): Promise<void> {
+  static async deleteAd(id: string): Promise<void> {
     const { affected } = await Ad.delete(id);
     if (affected === 0) {
       throw new Error(`Ad with ID ${id} does not exist.`);
@@ -134,8 +134,8 @@ class Ad extends BaseEntity {
   }
 
   static async updateAd(
-    id: number,
-    partialAd: Partial<Ad> & { category?: number; tags?: number[] }
+    id: string,
+    partialAd: Partial<Ad> & { category?: number; tags?: string[] }
   ): Promise<Ad> {
     const ad = await Ad.getAdById(id);
     Object.assign(ad, partialAd);
