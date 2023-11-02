@@ -8,7 +8,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ObjectType, Field, ID, Float } from "type-graphql";
+import { ObjectType, Field, ID, Float, ArgsType, Int } from "type-graphql";
 
 import Category from "./category";
 import Tag from "./tag";
@@ -46,7 +46,7 @@ class Ad extends BaseEntity {
 
   @CreateDateColumn()
   @Field()
-  createdAd!: Date;
+  createdAt!: Date;
 
   @ManyToOne(() => Category, (category) => category.ads, { eager: true })
   @Field(() => Category)
@@ -85,23 +85,21 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async saveNewAd(
-    adData: Partial<Ad> & { category?: number; tags?: string[] }
-  ): Promise<Ad> {
+  static async saveNewAd(adData: CreateAd): Promise<Ad> {
     const newAd = new Ad(adData);
-    if (adData.category) {
-      const category = await Category.getCategoryById(adData.category);
+    if (adData.categoryId) {
+      const category = await Category.getCategoryById(adData.categoryId);
       newAd.category = category;
     }
     // const associatedTags = [];
-    if (adData.tags) {
+    if (adData.tagIds) {
       // for (const tagId of adData.tags) {
       //   const tag = await Tag.getTagById(tagId);
       //   associatedTags.push(tag);
       // }
 
       // Promise.all will call each function in array passed as argument and resolve when all are resolved
-      newAd.tags = await Promise.all(adData.tags.map(Tag.getTagById));
+      newAd.tags = await Promise.all(adData.tagIds.map(Tag.getTagById));
     }
     const savedAd = await newAd.save();
     console.log(`New ad saved: ${savedAd.getStringRepresentation()}.`);
@@ -111,7 +109,7 @@ class Ad extends BaseEntity {
   static async getAds(categoryId?: number): Promise<Ad[]> {
     const ads = await Ad.find({
       where: { category: { id: categoryId } },
-      order: { createdAd: "DESC" },
+      order: { createdAt: "DESC" },
     });
     return ads;
   }
@@ -158,3 +156,30 @@ class Ad extends BaseEntity {
 }
 
 export default Ad;
+
+@ArgsType()
+export class CreateAd {
+  @Field()
+  title!: string;
+
+  @Field({ nullable: true })
+  description!: string;
+
+  @Field()
+  owner!: string;
+
+  @Field(() => Float, { nullable: true })
+  price!: number;
+
+  @Field({ nullable: true })
+  picture!: string;
+
+  @Field({ nullable: true })
+  location!: string;
+
+  @Field(() => Int)
+  categoryId!: number;
+
+  @Field(() => [String], { nullable: true })
+  tagIds!: string[];
+}

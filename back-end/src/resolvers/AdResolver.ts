@@ -1,5 +1,6 @@
 import Ad from "../entities/ad";
-import { Arg, ID, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Args, ID, Mutation, Query, Resolver } from "type-graphql";
+import { CreateAd } from "../entities/ad";
 
 @Resolver()
 export class AdResolver {
@@ -14,7 +15,7 @@ export class AdResolver {
   }
 
   @Mutation(() => Ad)
-  createAd() {
-    //...
+  createAd(@Args() args: CreateAd) {
+    return Ad.saveNewAd(args);
   }
 }
