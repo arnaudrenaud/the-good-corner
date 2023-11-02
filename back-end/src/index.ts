@@ -11,10 +11,11 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSchema } from "type-graphql";
 import { AdResolver } from "./resolvers/AdResolver";
+import { TagResolver } from "./resolvers/TagResolver";
 
 const startApolloServer = async () => {
   const schema = await buildSchema({
-    resolvers: [AdResolver],
+    resolvers: [AdResolver, TagResolver],
     validate: true,
   });
   const server = new ApolloServer({ schema });

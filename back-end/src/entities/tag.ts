@@ -6,7 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Ad from "./ad";
-import { Field, ID, ObjectType } from "type-graphql";
+import { ArgsType, Field, ID, ObjectType } from "type-graphql";
+import { MinLength } from "class-validator";
 
 @Entity()
 @ObjectType()
@@ -20,7 +21,6 @@ class Tag extends BaseEntity {
   name!: string;
 
   @ManyToMany(() => Ad, (ad) => ad.tags)
-  @Field(() => [Ad])
   ads!: Ad[];
 
   constructor(tag?: Partial<Tag>) {
@@ -72,3 +72,10 @@ class Tag extends BaseEntity {
 }
 
 export default Tag;
+
+@ArgsType()
+export class CreateOrUpdateTag {
+  @Field()
+  @MinLength(2)
+  name!: string;
+}
