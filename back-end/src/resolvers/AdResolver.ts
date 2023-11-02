@@ -1,5 +1,5 @@
 import Ad from "../entities/ad";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, ID, Mutation, Query, Resolver } from "type-graphql";
 
 @Resolver()
 export class AdResolver {
@@ -9,8 +9,8 @@ export class AdResolver {
   }
 
   @Query(() => Ad)
-  ad() {
-    //...
+  ad(@Arg("id", () => ID) id: string) {
+    return Ad.getAdById(id);
   }
 
   @Mutation(() => Ad)
