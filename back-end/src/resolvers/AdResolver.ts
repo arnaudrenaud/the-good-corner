@@ -22,4 +22,9 @@ export class AdResolver {
   updateAd(@Arg("id", () => ID) id: string, @Args() args: CreateOrUpdateAd) {
     return Ad.updateAd(id, args);
   }
+
+  @Mutation(() => Ad)
+  async deleteAd(@Arg("id", () => ID) id: string) {
+    return Ad.deleteAd(id);
+  }
 }
