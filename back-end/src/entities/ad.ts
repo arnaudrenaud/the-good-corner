@@ -85,7 +85,7 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async saveNewAd(adData: CreateAd): Promise<Ad> {
+  static async saveNewAd(adData: CreateOrUpdateAd): Promise<Ad> {
     const newAd = new Ad(adData);
     if (adData.categoryId) {
       const category = await Category.getCategoryById(adData.categoryId);
@@ -131,7 +131,7 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async updateAd(id: string, partialAd: UpdateAd): Promise<Ad> {
+  static async updateAd(id: string, partialAd: CreateOrUpdateAd): Promise<Ad> {
     const ad = await Ad.getAdById(id);
     Object.assign(ad, partialAd);
 
@@ -155,7 +155,7 @@ class Ad extends BaseEntity {
 export default Ad;
 
 @ArgsType()
-export class CreateAd {
+export class CreateOrUpdateAd {
   @Field()
   title!: string;
 
@@ -175,33 +175,6 @@ export class CreateAd {
   location!: string;
 
   @Field(() => Int)
-  categoryId!: number;
-
-  @Field(() => [String], { nullable: true })
-  tagIds!: string[];
-}
-
-@ArgsType()
-export class UpdateAd {
-  @Field({ nullable: true })
-  title!: string;
-
-  @Field({ nullable: true })
-  description!: string;
-
-  @Field({ nullable: true })
-  owner!: string;
-
-  @Field(() => Float, { nullable: true })
-  price!: number;
-
-  @Field({ nullable: true })
-  picture!: string;
-
-  @Field({ nullable: true })
-  location!: string;
-
-  @Field(() => Int, { nullable: true })
   categoryId!: number;
 
   @Field(() => [String], { nullable: true })
