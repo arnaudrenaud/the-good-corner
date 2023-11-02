@@ -31,22 +31,7 @@ const startApolloServer = async () => {
   });
 
   await dataSource.initialize();
-  await Category.saveNewCategoryIfNotExisting({ id: 1, name: "Ameublement" });
-  await Category.saveNewCategoryIfNotExisting({
-    id: 2,
-    name: "Électroménager",
-  });
-  await Category.saveNewCategoryIfNotExisting({ id: 3, name: "Photographie" });
-  await Category.saveNewCategoryIfNotExisting({ id: 4, name: "Informatique" });
-  await Category.saveNewCategoryIfNotExisting({ id: 5, name: "Téléphonie" });
-  await Category.saveNewCategoryIfNotExisting({ id: 6, name: "Vélos" });
-  await Category.saveNewCategoryIfNotExisting({ id: 7, name: "Véhicules" });
-  await Category.saveNewCategoryIfNotExisting({ id: 8, name: "Sport" });
-  await Category.saveNewCategoryIfNotExisting({ id: 9, name: "Habillement" });
-  await Category.saveNewCategoryIfNotExisting({ id: 10, name: "Bébé" });
-  await Category.saveNewCategoryIfNotExisting({ id: 11, name: "Outillage" });
-  await Category.saveNewCategoryIfNotExisting({ id: 12, name: "Services" });
-  await Category.saveNewCategoryIfNotExisting({ id: 13, name: "Vacances" });
+  await Category.initializeCategories();
 
   console.log(`🚀  Server ready at: ${url}`);
 };
