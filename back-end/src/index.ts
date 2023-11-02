@@ -13,7 +13,10 @@ import { buildSchema } from "type-graphql";
 import { AdResolver } from "./resolvers/AdResolver";
 
 const startApolloServer = async () => {
-  const schema = await buildSchema({ resolvers: [AdResolver] });
+  const schema = await buildSchema({
+    resolvers: [AdResolver],
+    validate: true,
+  });
   const server = new ApolloServer({ schema });
 
   const { url } = await startStandaloneServer(server, {

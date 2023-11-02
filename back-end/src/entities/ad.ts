@@ -12,6 +12,13 @@ import { ObjectType, Field, ID, Float, Int, ArgsType } from "type-graphql";
 
 import Category from "./category";
 import Tag from "./tag";
+import {
+  IsCurrency,
+  IsDecimal,
+  IsEmail,
+  Min,
+  MinLength,
+} from "class-validator";
 
 @Entity()
 @ObjectType()
@@ -157,15 +164,18 @@ export default Ad;
 @ArgsType()
 export class CreateOrUpdateAd {
   @Field()
+  @MinLength(2)
   title!: string;
 
   @Field({ nullable: true })
   description!: string;
 
   @Field()
+  @IsEmail()
   owner!: string;
 
   @Field(() => Float, { nullable: true })
+  @Min(0)
   price!: number;
 
   @Field({ nullable: true })
