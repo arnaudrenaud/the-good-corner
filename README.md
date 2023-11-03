@@ -26,3 +26,14 @@ npm run dev
 cd web-app
 npm run dev
 ```
+
+### Setting web-app types after GraphQL
+
+Generate query-specific types for web-app development:
+
+```
+cd web-app
+npm run graphql-codegen
+```
+
+These types can then be used in Apollo queries and mutations.
