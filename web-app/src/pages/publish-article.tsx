@@ -8,48 +8,71 @@ import {
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
 import { PageContainer } from "@/components/PageContainer/PageContainer";
+import {
+  CreateAdFormMutation,
+  CreateAdFormMutationVariables,
+} from "@/gql/graphql";
+import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-type PublishArticleFormData = {
-  title: string;
-  price: number | null;
-  description: string;
-  owner: string;
-};
+const CREATE_AD_FORM = gql`
+  mutation CreateAdForm(
+    $title: String!
+    $owner: String!
+    $price: Float!
+    $categoryId: Int!
+    $description: String!
+  ) {
+    createAd(
+      title: $title
+      owner: $owner
+      price: $price
+      categoryId: $categoryId
+      description: $description
+    ) {
+      id
+    }
+  }
+`;
 
 export default function PublishArticlePage() {
-  const [formData, setFormData] = useState<PublishArticleFormData>({
+  const [formData, setFormData] = useState<CreateAdFormMutationVariables>({
     title: "",
-    price: null,
+    price: 0,
     description: "",
     owner: "",
+    categoryId: 1,
   });
-  const [submissionStatus, setSubmissionStatus] = useState<
-    "IDLE" | "LOADING" | "ERROR" | "SUCCESS"
-  >("IDLE");
   const router = useRouter();
 
-  const updateFormData = (partialFormData: Partial<PublishArticleFormData>) => {
+  const updateFormData = (
+    partialFormData: Partial<CreateAdFormMutationVariables>
+  ) => {
     setFormData({ ...formData, ...partialFormData });
   };
 
+  const [createAdMutation, { loading, error }] = useMutation<
+    CreateAdFormMutation,
+    CreateAdFormMutationVariables
+  >(CREATE_AD_FORM);
+
   const createArticle = async () => {
-    setSubmissionStatus("LOADING");
+    try {
+      const { data } = await createAdMutation({
+        variables: {
+          title: formData.title,
+          price: formData.price as number,
+          categoryId: formData.categoryId,
+          description: formData.description,
+          owner: formData.owner,
+        },
+      });
 
-    const response = await fetch("/api/ads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const { ad } = await response.json();
-
-    if (response.ok && ad.id) {
-      setSubmissionStatus("SUCCESS");
-      router.push(`/articles/${ad.id}?publishConfirmation=true`);
-    } else {
-      setSubmissionStatus("ERROR");
-    }
+      if (data && data.createAd.id) {
+        router.push(`/articles/${data.createAd.id}?publishConfirmation=true`);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -70,7 +93,7 @@ export default function PublishArticlePage() {
           <TextField
             type="text"
             required
-            minLength={4}
+            minLength={2}
             onChange={(event) => {
               updateFormData({ title: event.target.value });
             }}
@@ -105,13 +128,14 @@ export default function PublishArticlePage() {
             }}
           />
         </FormLabelWithField>
-        <PrimaryButton disabled={submissionStatus === "LOADING"}>
-          {submissionStatus === "LOADING" ? (
+        <PrimaryButton disabled={loading}>
+          {loading ? (
             <Loader size="SMALL" onBackground={true} />
           ) : (
             "Publier l'annonce"
           )}
         </PrimaryButton>
+        {error && error.message}
       </Form>
     </PageContainer>
   );
