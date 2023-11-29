@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  back-end:
+    build: ./back-end
+    ports:
+      - 4000:4000
+
+  web-app:
+    build: ./web-app
+    ports:
+      - 3000:3000
+
+  # database:
