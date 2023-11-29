@@ -12,8 +12,8 @@ import { AdResolver } from "./resolvers/AdResolver";
 import { TagResolver } from "./resolvers/TagResolver";
 
 const dataSource = new DataSource({
-  type: "sqlite",
-  database: "db.sqlite",
+  type: "postgres",
+  url: "postgres://postgres:password@database:5432/postgres",
   entities: [Ad, Category, Tag],
   synchronize: true,
 });
