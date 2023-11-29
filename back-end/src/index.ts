@@ -13,7 +13,7 @@ import { TagResolver } from "./resolvers/TagResolver";
 
 const dataSource = new DataSource({
   type: "postgres",
-  url: "postgres://postgres:password@database:5432/postgres",
+  url: process.env.DATABASE_URL,
   entities: [Ad, Category, Tag],
   synchronize: true,
 });
