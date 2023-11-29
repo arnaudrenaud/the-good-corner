@@ -21,5 +21,10 @@ services:
 
   database:
     image: postgres:15
+    volumes:
+      - database-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=password
+
+volumes:
+  database-data:
