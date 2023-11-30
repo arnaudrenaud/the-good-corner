@@ -3,16 +3,30 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { removeQueryParameter } from "@/utils";
-import { Article } from "@/types";
 import Modal from "@/components/Modal/Modal";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import ArticleDetails from "@/components/ArticleDetails/ArticleDetails";
 import Loader from "@/components/Loader/Loader";
+import { gql, useQuery } from "@apollo/client";
+import { GetAdQuery, GetAdQueryVariables } from "@/gql/graphql";
 
 const AlertBox = styled.div`
   padding: 8px;
   display: grid;
   gap: 8px;
+`;
+
+const GET_AD = gql`
+  query GetAd($id: ID!) {
+    ad(id: $id) {
+      id
+      title
+      price
+      description
+      owner
+      createdAt
+    }
+  }
 `;
 
 export default function ArticlePage() {
@@ -22,7 +36,6 @@ export default function ArticlePage() {
     publishConfirmation: string | undefined;
   };
 
-  const [article, setArticle] = useState<Article | null>(null);
   const [showPublishConfirmation, setShowPublishConfirmation] = useState(false);
 
   const showModal = () => {
@@ -39,31 +52,34 @@ export default function ArticlePage() {
     }
   }, [publishConfirmation]);
 
-  useEffect(() => {
-    const fetchAd = async (articleId: string) => {
-      const response = await fetch(`/api/ads/${articleId}`);
-      const { ad } = (await response.json()) as { ad: Article };
-      setArticle(ad);
-    };
-
-    if (id) {
-      fetchAd(id);
-    }
-  }, [id]);
-
-  return article ? (
-    <>
-      <ArticleDetails {...article} />
-      {showPublishConfirmation && (
-        <Modal onClose={hideModal}>
-          <AlertBox>
-            L'article {article.title} a bien été créé.
-            <PrimaryButton onClick={hideModal}>OK</PrimaryButton>
-          </AlertBox>
-        </Modal>
-      )}
-    </>
-  ) : (
-    <Loader global />
+  const { data, loading, error } = useQuery<GetAdQuery, GetAdQueryVariables>(
+    GET_AD,
+    { variables: { id } }
   );
+
+  if (loading) {
+    return <Loader global />;
+  }
+
+  if (error) {
+    return "Erreur lors du chargement (l'article existe-t-il ?)";
+  }
+
+  if (data) {
+    const { ad } = data;
+
+    return (
+      <>
+        <ArticleDetails {...ad} />
+        {showPublishConfirmation && (
+          <Modal onClose={hideModal}>
+            <AlertBox>
+              L'article {ad.title} a bien été créé.
+              <PrimaryButton onClick={hideModal}>OK</PrimaryButton>
+            </AlertBox>
+          </Modal>
+        )}
+      </>
+    );
+  }
 }

@@ -3,7 +3,7 @@ import { MailIcon } from "../Icons/MailIcon";
 
 import * as styled from "./ArticleDetails.styled";
 import { Separator } from "../Separator/Separator";
-import { Article } from "@/types";
+import { Ad, GetAdQuery } from "@/gql/graphql";
 
 export default function ArticleDetails({
   id,
@@ -12,7 +12,7 @@ export default function ArticleDetails({
   description,
   owner,
   createdAt,
-}: Article) {
+}: GetAdQuery["ad"]) {
   return (
     <>
       <h2>{title}</h2>
