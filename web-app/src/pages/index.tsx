@@ -50,7 +50,7 @@ export default function HomePage() {
             <ArticleCard
               key={article.id}
               id={article.id}
-              name={article.title}
+              title={article.title}
               price={
                 currency === "EURO"
                   ? article.price

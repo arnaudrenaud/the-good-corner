@@ -2,16 +2,14 @@ import Link from "next/link";
 
 import * as styled from "./ArticleCard.styled";
 import { BaseLink } from "../Link/BaseLink";
+import { GetAdsForCategoryQuery } from "@/gql/graphql";
 
 export default function ArticleCard({
   id,
-  name,
+  title,
   price,
   currency = "EURO",
-}: {
-  id: string;
-  name: string;
-  price: number;
+}: GetAdsForCategoryQuery["ads"][0] & {
   currency?: "EURO" | "DOLLAR";
 }) {
   return (
@@ -19,7 +17,7 @@ export default function ArticleCard({
       <BaseLink href={`/articles/${id}`}>
         <styled.Image src={`/images/${id}.webp`} />
         <styled.Text>
-          <styled.Title>{name}</styled.Title>
+          <styled.Title>{title}</styled.Title>
           <styled.Price>
             {price} {currency === "EURO" ? "€" : "$"}
           </styled.Price>
