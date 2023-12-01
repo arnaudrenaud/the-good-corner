@@ -37,6 +37,7 @@ const CREATE_AD_FORM = gql`
 `;
 
 export default function PublishArticlePage() {
+  // track file state
   const [formData, setFormData] = useState<CreateAdFormMutationVariables>({
     title: "",
     price: 0,
@@ -69,6 +70,9 @@ export default function PublishArticlePage() {
         },
       });
 
+      // requête POST au service file-hosting avec le fichier provenant de l'état
+      // bonus : compresser l'image et la transformer en jpeg avant de l'envoyer
+
       if (data && data.createAd.id) {
         router.push(`/articles/${data.createAd.id}?publishConfirmation=true`);
       }
@@ -86,7 +90,15 @@ export default function PublishArticlePage() {
       >
         <FormLabelWithField>
           Photo
-          <TextField type="file" />
+          <TextField
+            type="file"
+            onChange={(event) => {
+              const { files } = event.target;
+              if (files) {
+                console.log(files[0]);
+              }
+            }}
+          />
         </FormLabelWithField>
         <FormLabelWithField>
           Titre
