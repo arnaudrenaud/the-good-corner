@@ -11,6 +11,14 @@ services:
       - ./back-end:/app
       - /app/node_modules
 
+  file-hosting:
+    build: ./file-hosting
+    ports:
+      - 5001:5001
+    volumes:
+      - ./file-hosting:/app
+      - /app/node_modules
+
   web-app:
     build: ./web-app
     ports:
