@@ -5,6 +5,8 @@ services:
     build: ./back-end
     environment:
       - DATABASE_URL=postgres://postgres:password@database:5432/postgres
+    depends_on:
+      - database
     ports:
       - 4000:4000
     volumes:
