@@ -65,6 +65,15 @@ class User extends BaseEntity {
     }
     return user;
   }
+
+  static async signIn({
+    email,
+    password,
+  }: SignInUser): Promise<{ user: User; session: UserSession }> {
+    const user = await this.getUserWithEmailAndPassword({ email, password });
+    const session = await UserSession.saveNewSession(user);
+    return { user, session };
+  }
 }
 
 export default User;

@@ -10,8 +10,9 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  signIn(@Args() args: SignInUser) {
-    // TODO: set session ID and persist it in cookie
-    return User.getUserWithEmailAndPassword(args);
+  async signIn(@Args() args: SignInUser): Promise<User> {
+    // TODO: get session ID and set in cookie
+    const { user } = await User.signIn(args);
+    return user;
   }
 }
