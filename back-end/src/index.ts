@@ -11,6 +11,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSchema } from "type-graphql";
 import { AdResolver } from "./resolvers/AdResolver";
 import { TagResolver } from "./resolvers/TagResolver";
+import { UserResolver } from "./resolvers/UserResolver";
 
 const dataSource = new DataSource({
   type: "postgres",
@@ -22,7 +23,7 @@ const dataSource = new DataSource({
 const PORT = 4000;
 const startApolloServer = async () => {
   const schema = await buildSchema({
-    resolvers: [AdResolver, TagResolver],
+    resolvers: [AdResolver, TagResolver, UserResolver],
     validate: true,
   });
   const server = new ApolloServer({ schema });
