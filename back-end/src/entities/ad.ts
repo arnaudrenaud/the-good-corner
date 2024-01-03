@@ -158,8 +158,6 @@ class Ad extends BaseEntity {
   }
 }
 
-export default Ad;
-
 @ArgsType()
 export class CreateOrUpdateAd {
   @Field()
@@ -189,3 +187,5 @@ export class CreateOrUpdateAd {
   @Field(() => [String], { nullable: true })
   tagIds!: string[];
 }
+
+export default Ad;

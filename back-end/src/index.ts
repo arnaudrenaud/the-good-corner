@@ -4,6 +4,7 @@ import "reflect-metadata";
 import Ad from "./entities/ad";
 import Category from "./entities/category";
 import Tag from "./entities/tag";
+import User from "./entities/user";
 
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
@@ -14,7 +15,7 @@ import { TagResolver } from "./resolvers/TagResolver";
 const dataSource = new DataSource({
   type: "postgres",
   url: process.env.DATABASE_URL,
-  entities: [Ad, Category, Tag],
+  entities: [Ad, Category, Tag, User],
   synchronize: true,
 });
 
