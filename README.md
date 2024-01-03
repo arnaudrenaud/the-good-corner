@@ -2,10 +2,16 @@
 
 ## Development
 
-Run app:
+Run app in watch mode:
 
 ```
-docker compose up --build
+docker compose watch
+```
+
+In parallel, follow log output with:
+
+```
+docker compose logs -f
 ```
 
 ### Setting web-app types after GraphQL

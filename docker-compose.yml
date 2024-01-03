@@ -9,25 +9,37 @@ services:
       - database
     ports:
       - 4000:4000
-    volumes:
-      - ./back-end:/app
-      - /app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./back-end
+          target: /app
+        - action: rebuild
+          path: back-end/package.json
 
   file-hosting:
     build: ./file-hosting
     ports:
       - 5001:5001
-    volumes:
-      - ./file-hosting:/app
-      - /app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./file-hosting
+          target: /app
+        - action: rebuild
+          path: file-hosting/package.json
 
   web-app:
     build: ./web-app
     ports:
       - 3000:3000
-    volumes:
-      - ./web-app:/app
-      - /app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./web-app
+          target: /app
+        - action: rebuild
+          path: web-app/package.json
 
   database:
     image: postgres:15
