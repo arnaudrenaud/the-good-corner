@@ -1,5 +1,6 @@
 import { Args, Mutation, Resolver } from "type-graphql";
-import User, { CreateOrUpdateUser, SignInUser } from "../entities/user";
+import User from "../entities/user";
+import { CreateOrUpdateUser, SignInUser } from "../entities/user.args";
 
 @Resolver()
 export class UserResolver {

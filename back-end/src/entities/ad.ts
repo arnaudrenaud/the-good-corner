@@ -8,11 +8,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ObjectType, Field, ID, Float, Int, ArgsType } from "type-graphql";
+import { ObjectType, Field, ID, Float } from "type-graphql";
 
 import Category from "./category";
 import Tag from "./tag";
-import { IsEmail, Min, MinLength } from "class-validator";
+import { CreateOrUpdateAd } from "./ad.args";
 
 @Entity()
 @ObjectType()
@@ -150,36 +150,6 @@ class Ad extends BaseEntity {
   getStringRepresentation(): string {
     return `${this.id} | ${this.title} | ${this.owner} | ${this.price} €`;
   }
-}
-
-@ArgsType()
-export class CreateOrUpdateAd {
-  @Field()
-  @MinLength(2)
-  title!: string;
-
-  @Field({ nullable: true })
-  description!: string;
-
-  @Field()
-  @IsEmail()
-  owner!: string;
-
-  @Field(() => Float)
-  @Min(0)
-  price!: number;
-
-  @Field({ nullable: true })
-  picture!: string;
-
-  @Field({ nullable: true })
-  location!: string;
-
-  @Field(() => Int)
-  categoryId!: number;
-
-  @Field(() => [String], { nullable: true })
-  tagIds!: string[];
 }
 
 export default Ad;

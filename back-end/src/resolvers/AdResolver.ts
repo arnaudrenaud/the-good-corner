@@ -1,5 +1,6 @@
 import { Arg, Args, ID, Mutation, Query, Resolver } from "type-graphql";
-import Ad, { CreateOrUpdateAd } from "../entities/ad";
+import Ad from "../entities/ad";
+import { CreateOrUpdateAd } from "../entities/ad.args";
 
 @Resolver()
 export class AdResolver {

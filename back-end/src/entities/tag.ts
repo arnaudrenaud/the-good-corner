@@ -6,8 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Ad from "./ad";
-import { ArgsType, Field, ID, ObjectType } from "type-graphql";
-import { MinLength } from "class-validator";
+import { Field, ID, ObjectType } from "type-graphql";
 
 @Entity()
 @ObjectType()
@@ -72,10 +71,3 @@ class Tag extends BaseEntity {
 }
 
 export default Tag;
-
-@ArgsType()
-export class CreateOrUpdateTag {
-  @Field()
-  @MinLength(2)
-  name!: string;
-}

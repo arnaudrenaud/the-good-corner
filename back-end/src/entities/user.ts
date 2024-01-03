@@ -1,36 +1,7 @@
-import { ArgsType, Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { IsEmail, MinLength } from "class-validator";
 import { compare, hash } from "bcrypt";
-
-@ArgsType()
-export class CreateOrUpdateUser {
-  @Field()
-  @IsEmail()
-  email!: string;
-
-  @Field()
-  @MinLength(1)
-  firstName!: string;
-
-  @Field()
-  @MinLength(1)
-  lastName!: string;
-
-  @Field()
-  @MinLength(12)
-  password!: string;
-}
-
-@ArgsType()
-export class SignInUser {
-  @Field()
-  @IsEmail()
-  email!: string;
-
-  @Field()
-  password!: string;
-}
+import { CreateOrUpdateUser, SignInUser } from "./user.args";
 
 @Entity("AppUser")
 @ObjectType()
