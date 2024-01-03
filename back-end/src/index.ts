@@ -5,6 +5,7 @@ import Ad from "./entities/ad";
 import Category from "./entities/category";
 import Tag from "./entities/tag";
 import User from "./entities/user";
+import UserSession from "./entities/userSession";
 
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
@@ -16,7 +17,7 @@ import { UserResolver } from "./resolvers/UserResolver";
 const dataSource = new DataSource({
   type: "postgres",
   url: process.env.DATABASE_URL,
-  entities: [Ad, Category, Tag, User],
+  entities: [Ad, Category, Tag, User, UserSession],
   synchronize: true,
 });
 

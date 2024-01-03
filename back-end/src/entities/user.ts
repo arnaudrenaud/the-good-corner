@@ -1,7 +1,14 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { compare, hash } from "bcrypt";
 import { CreateOrUpdateUser, SignInUser } from "./user.args";
+import UserSession from "./userSession";
 
 @Entity("AppUser")
 @ObjectType()
@@ -24,6 +31,9 @@ class User extends BaseEntity {
 
   @Column()
   hashedPassword!: string;
+
+  @OneToMany(() => UserSession, (session) => session.user)
+  sessions!: UserSession[];
 
   constructor(user?: CreateOrUpdateUser) {
     super();
