@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import "reflect-metadata";
+import { Response } from "express";
 
 import Ad from "./entities/ad";
 import Category from "./entities/category";
@@ -13,6 +14,8 @@ import { buildSchema } from "type-graphql";
 import { AdResolver } from "./resolvers/AdResolver";
 import { TagResolver } from "./resolvers/TagResolver";
 import { UserResolver } from "./resolvers/UserResolver";
+
+export type Context = { res: Response };
 
 const dataSource = new DataSource({
   type: "postgres",
@@ -31,6 +34,9 @@ const startApolloServer = async () => {
 
   const { url } = await startStandaloneServer(server, {
     listen: { port: PORT },
+    context: async ({ res }) => {
+      return { res };
+    },
   });
 
   await dataSource.initialize();
