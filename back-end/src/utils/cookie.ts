@@ -1,5 +1,7 @@
 import { Response } from "express";
 import UserSession from "../entities/userSession";
+import { parse } from "cookie";
+import { IncomingMessage } from "node:http";
 
 export function setUserSessionIdInCookie(
   expressResponse: Response,
@@ -10,4 +12,8 @@ export function setUserSessionIdInCookie(
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 365,
   });
+}
+
+export function getUserSessionIdFromCookie(req: IncomingMessage) {
+  return parse(req.headers.cookie || "").userSessionId as string | undefined;
 }

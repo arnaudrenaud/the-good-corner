@@ -74,6 +74,17 @@ class User extends BaseEntity {
     const session = await UserSession.saveNewSession(user);
     return { user, session };
   }
+
+  static async getUserWithSessionId(sessionId: string): Promise<User | null> {
+    const session = await UserSession.findOne({
+      where: { id: sessionId },
+      relations: { user: true },
+    });
+    if (!session) {
+      return null;
+    }
+    return session.user;
+  }
 }
 
 export default User;

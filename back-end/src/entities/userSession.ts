@@ -11,7 +11,7 @@ class UserSession extends BaseEntity {
   @ManyToOne(() => User, (user) => user.sessions)
   user!: User;
 
-  constructor(user: User) {
+  constructor(user?: User) {
     super();
 
     if (user) {
