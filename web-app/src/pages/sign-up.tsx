@@ -6,7 +6,10 @@ import {
 } from "@/components/FormElements/Input/Input";
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
-import { PageContainer } from "@/components/PageContainer/PageContainer";
+import {
+  NarrowPageContainer,
+  PageContainer,
+} from "@/components/PageContainer/PageContainer";
 import { SignUpFormMutation, SignUpFormMutationVariables } from "@/gql/graphql";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -64,7 +67,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <PageContainer>
+    <NarrowPageContainer>
       <MainContentTitle>Inscription</MainContentTitle>
       <Form
         onSubmit={(event) => {
@@ -120,6 +123,6 @@ export default function SignUpPage() {
         </PrimaryButton>
         {error && error.message}
       </Form>
-    </PageContainer>
+    </NarrowPageContainer>
   );
 }

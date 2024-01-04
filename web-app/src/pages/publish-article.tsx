@@ -7,7 +7,7 @@ import {
 } from "@/components/FormElements/Input/Input";
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
-import { PageContainer } from "@/components/PageContainer/PageContainer";
+import { NarrowPageContainer } from "@/components/PageContainer/PageContainer";
 import {
   CreateAdFormMutation,
   CreateAdFormMutationVariables,
@@ -78,7 +78,7 @@ export default function PublishArticlePage() {
   };
 
   return (
-    <PageContainer>
+    <NarrowPageContainer>
       <MainContentTitle>Publier une annonce</MainContentTitle>
       <Form
         onSubmit={(event) => {
@@ -147,6 +147,6 @@ export default function PublishArticlePage() {
         </PrimaryButton>
         {error && error.message}
       </Form>
-    </PageContainer>
+    </NarrowPageContainer>
   );
 }
