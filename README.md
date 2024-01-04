@@ -5,7 +5,7 @@
 Run app in watch mode:
 
 ```
-docker compose watch
+docker compose build && docker compose watch
 ```
 
 In parallel, follow log output with:
