@@ -15,7 +15,7 @@ import { AdResolver } from "./resolvers/AdResolver";
 import { TagResolver } from "./resolvers/TagResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 
-export type Context = { res: Response };
+export type Context = { res: Response; user: User | null };
 
 const dataSource = new DataSource({
   type: "postgres",
@@ -34,8 +34,10 @@ const startApolloServer = async () => {
 
   const { url } = await startStandaloneServer(server, {
     listen: { port: PORT },
-    context: async ({ res }) => {
-      return { res };
+    context: async ({ req, res }): Promise<Context> => {
+      console.log({ req });
+      // get User from req (using cookie userSessionId)
+      return { res: res as Response, user: null };
     },
   });
 
