@@ -15,7 +15,7 @@ export default function ArticleCard({
   return (
     <styled.Container>
       <BaseLink href={`/articles/${id}`}>
-        <styled.Image src={`/images/${id}.webp`} />
+        <styled.Image src={`/file-hosting/${id}.jpg`} />
         <styled.Text>
           <styled.Title>{title}</styled.Title>
           <styled.Price>
