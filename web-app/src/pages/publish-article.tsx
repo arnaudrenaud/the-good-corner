@@ -59,24 +59,22 @@ export default function PublishArticlePage() {
   >(CREATE_AD_FORM);
 
   const createArticle = async () => {
-    try {
-      const { data } = await createAdMutation({
-        variables: {
-          title: formData.title,
-          price: formData.price as number,
-          categoryId: formData.categoryId,
-          description: formData.description,
-          owner: formData.owner,
-        },
-      });
+    const { data } = await createAdMutation({
+      variables: {
+        title: formData.title,
+        price: formData.price as number,
+        categoryId: formData.categoryId,
+        description: formData.description,
+        owner: formData.owner,
+      },
+    });
 
-      // requête POST au service file-hosting avec le fichier provenant de l'état
-      // bonus : compresser l'image et la transformer en jpeg avant de l'envoyer
+    // requête POST au service file-hosting avec le fichier provenant de l'état
+    // bonus : compresser l'image et la transformer en jpeg avant de l'envoyer
 
-      if (data && data.createAd.id) {
-        router.push(`/articles/${data.createAd.id}?publishConfirmation=true`);
-      }
-    } catch (error) {}
+    if (data && data.createAd.id) {
+      router.push(`/articles/${data.createAd.id}?publishConfirmation=true`);
+    }
   };
 
   return (
