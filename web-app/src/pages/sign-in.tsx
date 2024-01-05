@@ -14,7 +14,7 @@ import {
 } from "@/gql/graphql";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SIGN_IN_FORM = gql`
   mutation SignInForm($email: String!, $password: String!) {
@@ -37,13 +37,21 @@ const GET_MY_PROFILE_SIGN_IN = gql`
 `;
 
 export default function SignInPage() {
-  const { refetch } = useQuery<GetMyProfileSignInQuery>(GET_MY_PROFILE_SIGN_IN);
+  const router = useRouter();
+
+  const { data, refetch } = useQuery<GetMyProfileSignInQuery>(
+    GET_MY_PROFILE_SIGN_IN
+  );
+  useEffect(() => {
+    if (data?.myProfile) {
+      router.push("/my-profile");
+    }
+  }, [data]);
 
   const [formData, setFormData] = useState<SignInFormMutationVariables>({
     email: "",
     password: "",
   });
-  const router = useRouter();
 
   const updateFormData = (
     partialFormData: Partial<SignInFormMutationVariables>
