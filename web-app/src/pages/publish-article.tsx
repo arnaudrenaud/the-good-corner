@@ -15,6 +15,7 @@ import {
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { readAndCompressImage } from "browser-image-resizer";
 
 const CREATE_AD_FORM = gql`
   mutation CreateAdForm(
@@ -61,9 +62,12 @@ export default function PublishArticlePage() {
   const uploadImage = async (id: string) => {
     console.log({ fileInForm });
     if (fileInForm) {
-      // TODO : compresser l'image et la transformer en jpeg avant de l'envoyer
+      const resizedJpgFile = await readAndCompressImage(fileInForm, {
+        quality: 0.75,
+        maxWidth: 1440,
+      });
       const body = new FormData();
-      body.append("file", fileInForm, `${id}.jpg`);
+      body.append("file", resizedJpgFile, `${id}.jpg`);
       await fetch("/file-hosting", {
         method: "POST",
         body,

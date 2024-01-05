@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
+    "browser-image-resizer": "^2.4.1",
     "graphql": "^16.8.1",
     "next": "latest",
     "react": "latest",
@@ -19,11 +20,11 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "babel-plugin-styled-components": "^2.1.4",
-    "typescript": "latest",
-    "@graphql-codegen/client-preset": "4.1.0"
+    "typescript": "latest"
   }
 }
