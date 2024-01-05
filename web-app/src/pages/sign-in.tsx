@@ -7,8 +7,12 @@ import {
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
 import { NarrowPageContainer } from "@/components/PageContainer/PageContainer";
-import { SignInFormMutation, SignInFormMutationVariables } from "@/gql/graphql";
-import { gql, useMutation } from "@apollo/client";
+import {
+  GetMyProfileSignInQuery,
+  SignInFormMutation,
+  SignInFormMutationVariables,
+} from "@/gql/graphql";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -23,7 +27,20 @@ const SIGN_IN_FORM = gql`
   }
 `;
 
+const GET_MY_PROFILE_SIGN_IN = gql`
+  query GetMyProfileSignIn {
+    myProfile {
+      email
+      id
+      firstName
+      lastName
+    }
+  }
+`;
+
 export default function SignInPage() {
+  const { refetch } = useQuery<GetMyProfileSignInQuery>(GET_MY_PROFILE_SIGN_IN);
+
   const [formData, setFormData] = useState<SignInFormMutationVariables>({
     email: "",
     password: "",
@@ -47,6 +64,7 @@ export default function SignInPage() {
     });
 
     if (data && data.signIn) {
+      refetch();
       router.push("/");
     }
   };

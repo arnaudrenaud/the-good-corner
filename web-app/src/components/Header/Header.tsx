@@ -9,10 +9,10 @@ import { MainSearchField } from "../FormElements/Input/Input";
 import { BaseLink } from "../Link/BaseLink";
 import ResponsiveLabel from "../ResponsiveLabel/ResponsiveLabel";
 import { gql, useQuery } from "@apollo/client";
-import { GetMyProfileQuery } from "@/gql/graphql";
+import { GetMyProfileHeaderQuery } from "@/gql/graphql";
 
-const GET_MY_PROFILE = gql`
-  query GetMyProfile {
+const GET_MY_PROFILE_HEADER = gql`
+  query GetMyProfileHeader {
     myProfile {
       email
       id
@@ -23,7 +23,9 @@ const GET_MY_PROFILE = gql`
 `;
 
 export default function Header() {
-  const { data, loading } = useQuery<GetMyProfileQuery>(GET_MY_PROFILE);
+  const { data, loading } = useQuery<GetMyProfileHeaderQuery>(
+    GET_MY_PROFILE_HEADER
+  );
 
   return (
     <styled.Header>
