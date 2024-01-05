@@ -1,4 +1,13 @@
-import { Arg, Args, Ctx, ID, Mutation, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Args,
+  Authorized,
+  Ctx,
+  ID,
+  Mutation,
+  Query,
+  Resolver,
+} from "type-graphql";
 import Ad from "../entities/ad";
 import { CreateOrUpdateAd } from "../entities/ad.args";
 import { Context } from "..";
@@ -15,19 +24,19 @@ export class AdResolver {
     return Ad.getAdById(id);
   }
 
+  @Authorized()
   @Mutation(() => Ad)
   createAd(@Args() args: CreateOrUpdateAd, @Ctx() { user }: Context) {
-    if (!user) {
-      throw new Error(`Vous n'êtes pas connecté.`);
-    }
     return Ad.saveNewAd(args);
   }
 
+  @Authorized()
   @Mutation(() => Ad)
   updateAd(@Arg("id", () => ID) id: string, @Args() args: CreateOrUpdateAd) {
     return Ad.updateAd(id, args);
   }
 
+  @Authorized()
   @Mutation(() => Ad)
   async deleteAd(@Arg("id", () => ID) id: string) {
     return Ad.deleteAd(id);
