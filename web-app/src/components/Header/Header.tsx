@@ -40,7 +40,7 @@ export default function Header() {
           </PrimaryButton>
         </styled.TextFieldWithButton>
         {!loading && (
-          <ButtonLikeLink href="/my-profile">
+          <ButtonLikeLink href={data?.myProfile ? "/my-profile" : "/sign-in"}>
             {data?.myProfile
               ? `${data.myProfile.firstName[0]}${data.myProfile.lastName[0]}`
               : "Me connecter"}
