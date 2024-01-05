@@ -23,7 +23,7 @@ const GET_MY_PROFILE = gql`
 `;
 
 export default function Header() {
-  const { data } = useQuery<GetMyProfileQuery>(GET_MY_PROFILE);
+  const { data, loading } = useQuery<GetMyProfileQuery>(GET_MY_PROFILE);
 
   return (
     <styled.Header>
@@ -39,11 +39,13 @@ export default function Header() {
             <SearchIcon />
           </PrimaryButton>
         </styled.TextFieldWithButton>
-        <ButtonLikeLink href="/my-profile">
-          {data?.myProfile
-            ? `${data.myProfile.firstName[0]}${data.myProfile.lastName[0]}`
-            : "Me connecter"}
-        </ButtonLikeLink>
+        {!loading && (
+          <ButtonLikeLink href="/my-profile">
+            {data?.myProfile
+              ? `${data.myProfile.firstName[0]}${data.myProfile.lastName[0]}`
+              : "Me connecter"}
+          </ButtonLikeLink>
+        )}
         <ButtonLikeLink href="/publish-article">
           <ResponsiveLabel
             mobileLabel="Publier"
