@@ -14,10 +14,8 @@ import { GetMyProfileHeaderQuery } from "@/gql/graphql";
 const GET_MY_PROFILE_HEADER = gql`
   query GetMyProfileHeader {
     myProfile {
-      email
       id
-      firstName
-      lastName
+      initials
     }
   }
 `;
@@ -43,9 +41,7 @@ export default function Header() {
         </styled.TextFieldWithButton>
         {!loading && (
           <ButtonLikeLink href={data?.myProfile ? "/my-profile" : "/sign-in"}>
-            {data?.myProfile
-              ? `${data.myProfile.firstName[0]}${data.myProfile.lastName[0]}`
-              : "Me connecter"}
+            {data?.myProfile ? data.myProfile.initials : "Me connecter"}
           </ButtonLikeLink>
         )}
         <ButtonLikeLink href="/publish-article">

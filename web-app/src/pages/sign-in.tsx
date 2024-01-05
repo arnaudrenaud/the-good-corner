@@ -30,10 +30,8 @@ const SIGN_IN_FORM = gql`
 const GET_MY_PROFILE_SIGN_IN = gql`
   query GetMyProfileSignIn {
     myProfile {
-      email
       id
-      firstName
-      lastName
+      initials
     }
   }
 `;

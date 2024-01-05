@@ -29,6 +29,11 @@ class User extends BaseEntity {
   @Field()
   lastName!: string;
 
+  @Field()
+  get initials(): string {
+    return `${this.firstName[0]}${this.lastName[0]}`;
+  }
+
   @Column()
   hashedPassword!: string;
 
