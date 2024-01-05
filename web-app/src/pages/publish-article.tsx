@@ -5,14 +5,16 @@ import {
   TextArea,
   TextField,
 } from "@/components/FormElements/Input/Input";
+import { InlineLink } from "@/components/Link/InlineLink";
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
 import { NarrowPageContainer } from "@/components/PageContainer/PageContainer";
 import {
   CreateAdFormMutation,
   CreateAdFormMutationVariables,
+  GetMyProfilePublishArticleQuery,
 } from "@/gql/graphql";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -34,7 +36,18 @@ const CREATE_AD_FORM = gql`
   }
 `;
 
+const GET_MY_PROFILE_PUBLISH_ARTICLE = gql`
+  query GetMyProfilePublishArticle {
+    myProfile {
+      id
+    }
+  }
+`;
+
 export default function PublishArticlePage() {
+  const { data, loading: loadingMyProfile } =
+    useQuery<GetMyProfilePublishArticleQuery>(GET_MY_PROFILE_PUBLISH_ARTICLE);
+
   // track file state
   const [formData, setFormData] = useState<CreateAdFormMutationVariables>({
     title: "",
@@ -73,7 +86,9 @@ export default function PublishArticlePage() {
     }
   };
 
-  return (
+  return loadingMyProfile ? (
+    <Loader global />
+  ) : data?.myProfile ? (
     <NarrowPageContainer>
       <MainContentTitle>Publier une annonce</MainContentTitle>
       <Form
@@ -133,6 +148,14 @@ export default function PublishArticlePage() {
         </PrimaryButton>
         {error && error.message}
       </Form>
+    </NarrowPageContainer>
+  ) : (
+    <NarrowPageContainer>
+      <p>
+        <InlineLink href="/sign-up">Inscrivez-vous</InlineLink> ou{" "}
+        <InlineLink href="/sign-in">connectez-vous</InlineLink> pour pouvoir
+        publier une annonce.
+      </p>
     </NarrowPageContainer>
   );
 }
