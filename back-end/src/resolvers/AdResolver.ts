@@ -11,6 +11,7 @@ import {
 import Ad from "../entities/ad";
 import { CreateOrUpdateAd } from "../entities/ad.args";
 import { Context } from "..";
+import User from "../entities/user";
 
 @Resolver()
 export class AdResolver {
@@ -27,7 +28,7 @@ export class AdResolver {
   @Authorized()
   @Mutation(() => Ad)
   createAd(@Args() args: CreateOrUpdateAd, @Ctx() { user }: Context) {
-    return Ad.saveNewAd(args);
+    return Ad.saveNewAd(args, user as User);
   }
 
   @Authorized()

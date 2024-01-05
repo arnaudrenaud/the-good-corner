@@ -13,6 +13,7 @@ import { ObjectType, Field, ID, Float } from "type-graphql";
 import Category from "./category";
 import Tag from "./tag";
 import { CreateOrUpdateAd } from "./ad.args";
+import User from "./user";
 
 @Entity()
 @ObjectType()
@@ -29,9 +30,9 @@ class Ad extends BaseEntity {
   @Field()
   description!: string;
 
-  @Column()
+  @ManyToOne(() => User, (user) => user.ads, { eager: true })
   @Field()
-  owner!: string;
+  owner!: User;
 
   @Column()
   @Field(() => Float)
@@ -58,7 +59,7 @@ class Ad extends BaseEntity {
   @Field(() => [Tag])
   tags!: Tag[];
 
-  constructor(ad?: Partial<Ad>) {
+  constructor(ad?: Partial<Ad>, owner?: User) {
     super();
 
     if (ad) {
@@ -67,10 +68,10 @@ class Ad extends BaseEntity {
       }
       this.title = ad.title;
 
-      if (!ad.owner) {
+      if (!owner) {
         throw new Error("Ad owner cannot be empty.");
       }
-      this.owner = ad.owner;
+      this.owner = owner;
       if (ad.description) {
         this.description = ad.description;
       }
@@ -86,8 +87,8 @@ class Ad extends BaseEntity {
     }
   }
 
-  static async saveNewAd(adData: CreateOrUpdateAd): Promise<Ad> {
-    const newAd = new Ad(adData);
+  static async saveNewAd(adData: CreateOrUpdateAd, owner: User): Promise<Ad> {
+    const newAd = new Ad(adData, owner);
     if (adData.categoryId) {
       const category = await Category.getCategoryById(adData.categoryId);
       newAd.category = category;

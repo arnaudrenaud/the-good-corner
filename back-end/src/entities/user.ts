@@ -9,6 +9,7 @@ import {
 import { compare, hash } from "bcrypt";
 import { CreateOrUpdateUser, SignInUser } from "./user.args";
 import UserSession from "./userSession";
+import Ad from "./ad";
 
 @Entity("AppUser")
 @ObjectType()
@@ -39,6 +40,9 @@ class User extends BaseEntity {
 
   @OneToMany(() => UserSession, (session) => session.user)
   sessions!: UserSession[];
+
+  @OneToMany(() => Ad, (ad) => ad.owner)
+  ads!: Ad[];
 
   constructor(user?: CreateOrUpdateUser) {
     super();
