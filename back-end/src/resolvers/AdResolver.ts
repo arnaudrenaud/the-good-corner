@@ -28,7 +28,7 @@ export class AdResolver {
   @Authorized()
   @Mutation(() => Ad)
   createAd(@Args() args: CreateOrUpdateAd, @Ctx() { user }: Context) {
-    return Ad.saveNewAd(args, user as User);
+    return Ad.saveNewAd({ ...args, owner: user as User });
   }
 
   @Authorized()

@@ -15,6 +15,10 @@ import Tag from "./tag";
 import { CreateOrUpdateAd } from "./ad.args";
 import User from "./user";
 
+type AdArgs = CreateOrUpdateAd & {
+  owner: User;
+};
+
 @Entity()
 @ObjectType()
 class Ad extends BaseEntity {
@@ -59,47 +63,26 @@ class Ad extends BaseEntity {
   @Field(() => [Tag])
   tags!: Tag[];
 
-  constructor(ad?: Partial<Ad>, owner?: User) {
+  constructor(ad?: AdArgs) {
     super();
 
     if (ad) {
-      if (!ad.title) {
-        throw new Error("Ad title cannot be empty.");
-      }
       this.title = ad.title;
-
-      if (!owner) {
-        throw new Error("Ad owner cannot be empty.");
-      }
-      this.owner = owner;
-      if (ad.description) {
-        this.description = ad.description;
-      }
-      if (ad.price) {
-        this.price = ad.price;
-      }
-      if (ad.picture) {
-        this.picture = ad.picture;
-      }
-      if (ad.location) {
-        this.location = ad.location;
-      }
+      this.owner = ad.owner;
+      this.description = ad.description;
+      this.price = ad.price;
+      this.picture = ad.picture;
+      this.location = ad.location;
     }
   }
 
-  static async saveNewAd(adData: CreateOrUpdateAd, owner: User): Promise<Ad> {
-    const newAd = new Ad(adData, owner);
+  static async saveNewAd(adData: AdArgs): Promise<Ad> {
+    const newAd = new Ad(adData);
     if (adData.categoryId) {
       const category = await Category.getCategoryById(adData.categoryId);
       newAd.category = category;
     }
-    // const associatedTags = [];
     if (adData.tagIds) {
-      // for (const tagId of adData.tags) {
-      //   const tag = await Tag.getTagById(tagId);
-      //   associatedTags.push(tag);
-      // }
-
       // Promise.all will call each function in array passed as argument and resolve when all are resolved
       newAd.tags = await Promise.all(adData.tagIds.map(Tag.getTagById));
     }
