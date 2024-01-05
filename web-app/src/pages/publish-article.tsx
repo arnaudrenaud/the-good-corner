@@ -19,14 +19,12 @@ import React, { useState } from "react";
 const CREATE_AD_FORM = gql`
   mutation CreateAdForm(
     $title: String!
-    $owner: String!
     $price: Float!
     $categoryId: Int!
     $description: String!
   ) {
     createAd(
       title: $title
-      owner: $owner
       price: $price
       categoryId: $categoryId
       description: $description
@@ -42,7 +40,6 @@ export default function PublishArticlePage() {
     title: "",
     price: 0,
     description: "",
-    owner: "",
     categoryId: 1,
   });
   const router = useRouter();
@@ -65,7 +62,6 @@ export default function PublishArticlePage() {
         price: formData.price as number,
         categoryId: formData.categoryId,
         description: formData.description,
-        owner: formData.owner,
       },
     });
 
@@ -125,16 +121,6 @@ export default function PublishArticlePage() {
           <TextArea
             onChange={(event) => {
               updateFormData({ description: event.target.value });
-            }}
-          />
-        </FormLabelWithField>
-        <FormLabelWithField>
-          Propriétaire
-          <TextField
-            type="email"
-            required
-            onChange={(event) => {
-              updateFormData({ owner: event.target.value });
             }}
           />
         </FormLabelWithField>
