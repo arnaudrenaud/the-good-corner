@@ -18,7 +18,7 @@ export default function ArticleDetails({
       <h2>{title}</h2>
       <styled.Container>
         <styled.ImageContainer>
-          <styled.Image src={`/images/${id}.webp`} />
+          <styled.Image src={`/file-hosting/${id}.jpg`} />
         </styled.ImageContainer>
         <styled.Info>
           <styled.Price>{price} €</styled.Price>

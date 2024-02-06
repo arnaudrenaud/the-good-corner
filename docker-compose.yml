@@ -21,6 +21,8 @@ services:
     build: ./file-hosting
     ports:
       - 5001:5001
+    volumes:
+      - file-hosting-public:/app/public
     develop:
       watch:
         - action: sync
@@ -50,3 +52,4 @@ services:
 
 volumes:
   database-data:
+  file-hosting-public:

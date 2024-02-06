@@ -1,7 +1,11 @@
 import express from "express";
 import multer from "multer";
+import fs from "fs";
 
 const PUBLIC_DIR = "public";
+if (!fs.existsSync(PUBLIC_DIR)) {
+  fs.mkdirSync(PUBLIC_DIR);
+}
 
 const app = express();
 

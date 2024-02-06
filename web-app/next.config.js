@@ -7,6 +7,10 @@ const nextConfig = {
         source: "/api/:path*",
         destination: "http://back-end:4000/:path*", // Proxy to Backend
       },
+      {
+        source: "/file-hosting/:path*",
+        destination: "http://file-hosting:5001/:path*",
+      },
     ];
   },
 };
