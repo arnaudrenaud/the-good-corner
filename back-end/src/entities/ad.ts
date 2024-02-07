@@ -35,7 +35,7 @@ class Ad extends BaseEntity {
   description!: string;
 
   @ManyToOne(() => User, (user) => user.ads, { eager: true })
-  @Field()
+  @Field(() => User)
   owner!: User;
 
   @Column()
