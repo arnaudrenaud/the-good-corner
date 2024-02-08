@@ -78,14 +78,13 @@ class Ad extends BaseEntity {
 
   static async saveNewAd(adData: AdArgs): Promise<Ad> {
     const newAd = new Ad(adData);
-    if (adData.categoryId) {
-      const category = await Category.getCategoryById(adData.categoryId);
-      newAd.category = category;
-    }
-    if (adData.tagIds) {
-      // Promise.all will call each function in array passed as argument and resolve when all are resolved
-      newAd.tags = await Promise.all(adData.tagIds.map(Tag.getTagById));
-    }
+
+    const category = await Category.getCategoryById(adData.categoryId);
+    newAd.category = category;
+
+    // Promise.all will call each function in array passed as argument and resolve when all are resolved
+    newAd.tags = await Promise.all(adData.tagIds.map(Tag.getTagById));
+
     const savedAd = await newAd.save();
     console.log(`New ad saved: ${savedAd.getStringRepresentation()}.`);
     return savedAd;
