@@ -37,7 +37,7 @@ const CREATE_AD_FORM = gql`
   }
 `;
 
-const GET_MY_PROFILE_PUBLISH_ARTICLE = gql`
+export const GET_MY_PROFILE_PUBLISH_ARTICLE = gql`
   query GetMyProfilePublishArticle {
     myProfile {
       id
@@ -110,6 +110,8 @@ export default function PublishArticlePage() {
     <NarrowPageContainer>
       <MainContentTitle>Publier une annonce</MainContentTitle>
       <Form
+        // TODO: add ARIA label to reusable Form component
+        aria-label="form"
         onSubmit={(event) => {
           event.preventDefault();
           createArticle();

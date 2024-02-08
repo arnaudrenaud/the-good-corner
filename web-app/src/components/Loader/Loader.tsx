@@ -11,9 +11,17 @@ export default function Loader({
 }) {
   return global ? (
     <styled.GlobalLoaderWrapper>
-      <styled.Loader $size={size} $onBackground={onBackground} />
+      <styled.Loader
+        $size={size}
+        $onBackground={onBackground}
+        role="progressbar"
+      />
     </styled.GlobalLoaderWrapper>
   ) : (
-    <styled.Loader $size={size} $onBackground={onBackground} />
+    <styled.Loader
+      $size={size}
+      $onBackground={onBackground}
+      role="progressbar"
+    />
   );
 }
