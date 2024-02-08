@@ -17,7 +17,6 @@ import {
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { readAndCompressImage } from "browser-image-resizer";
 
 const CREATE_AD_FORM = gql`
   mutation CreateAdForm(
@@ -71,20 +70,19 @@ export default function PublishArticlePage() {
   >(CREATE_AD_FORM);
 
   const uploadImage = async (id: string) => {
-    // TODO: fix page crash because of compression module
-    // console.log({ fileInForm });
-    // if (fileInForm) {
-    //   const resizedJpgFile = await readAndCompressImage(fileInForm, {
-    //     quality: 0.75,
-    //     maxWidth: 1440,
-    //   });
-    //   const body = new FormData();
-    //   body.append("file", resizedJpgFile, `${id}.jpg`);
-    //   await fetch("/file-hosting", {
-    //     method: "POST",
-    //     body,
-    //   });
-    // }
+    const { readAndCompressImage } = await import("browser-image-resizer");
+    if (fileInForm) {
+      const resizedJpgFile = await readAndCompressImage(fileInForm, {
+        quality: 0.75,
+        maxWidth: 1440,
+      });
+      const body = new FormData();
+      body.append("file", resizedJpgFile, `${id}.jpg`);
+      await fetch("/file-hosting", {
+        method: "POST",
+        body,
+      });
+    }
   };
 
   const createArticle = async () => {
