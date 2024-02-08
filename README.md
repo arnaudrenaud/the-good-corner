@@ -16,10 +16,20 @@ docker compose logs -f
 
 ### Run tests
 
+#### Back end
+
 Run tests in watch mode:
 
 ```
 docker compose exec back-end npm run test:watch
+```
+
+#### Web app
+
+Run tests in watch mode:
+
+```
+docker compose exec web-app npm run test:watch
 ```
 
 ### Setting web-app types after GraphQL
