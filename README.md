@@ -1,17 +1,19 @@
 # The Good Corner
 
+_Prerequisites: Docker (24+), Make._
+
 ## Development
 
 Run app in watch mode:
 
 ```
-docker compose build && docker compose watch
+make run-dev
 ```
 
 In parallel, follow log output with:
 
 ```
-docker compose logs -f
+make logs
 ```
 
 ### Run tests
@@ -21,7 +23,7 @@ docker compose logs -f
 Run tests in watch mode:
 
 ```
-docker compose exec back-end npm run test:watch
+make back-end-test-watch
 ```
 
 #### Web app
@@ -29,7 +31,7 @@ docker compose exec back-end npm run test:watch
 Run tests in watch mode:
 
 ```
-docker compose exec web-app npm run test:watch
+make web-app-test-watch
 ```
 
 ### Setting web-app types after GraphQL
@@ -37,8 +39,7 @@ docker compose exec web-app npm run test:watch
 Generate query-specific types for web-app development:
 
 ```
-cd web-app
-npm run graphql-codegen
+make web-app-generate-graphql-types
 ```
 
 These types can then be used in Apollo queries and mutations.
