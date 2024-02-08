@@ -71,19 +71,20 @@ export default function PublishArticlePage() {
   >(CREATE_AD_FORM);
 
   const uploadImage = async (id: string) => {
-    console.log({ fileInForm });
-    if (fileInForm) {
-      const resizedJpgFile = await readAndCompressImage(fileInForm, {
-        quality: 0.75,
-        maxWidth: 1440,
-      });
-      const body = new FormData();
-      body.append("file", resizedJpgFile, `${id}.jpg`);
-      await fetch("/file-hosting", {
-        method: "POST",
-        body,
-      });
-    }
+    // TODO: fix page crash because of compression module
+    // console.log({ fileInForm });
+    // if (fileInForm) {
+    //   const resizedJpgFile = await readAndCompressImage(fileInForm, {
+    //     quality: 0.75,
+    //     maxWidth: 1440,
+    //   });
+    //   const body = new FormData();
+    //   body.append("file", resizedJpgFile, `${id}.jpg`);
+    //   await fetch("/file-hosting", {
+    //     method: "POST",
+    //     body,
+    //   });
+    // }
   };
 
   const createArticle = async () => {
