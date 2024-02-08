@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import * as styled from "./ArticleCard.styled";
 import { BaseLink } from "../Link/BaseLink";
 import { GetAdsForCategoryQuery } from "@/gql/graphql";
