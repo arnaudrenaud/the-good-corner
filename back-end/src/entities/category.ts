@@ -48,9 +48,6 @@ class Category extends BaseEntity {
     }
     const newCategory = new Category(categoryData);
     const savedCategory = await newCategory.save();
-    console.log(
-      `New category saved: ${savedCategory.getStringRepresentation()}.`
-    );
     return savedCategory;
   }
 

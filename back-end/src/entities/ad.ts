@@ -86,7 +86,6 @@ class Ad extends BaseEntity {
     newAd.tags = await Promise.all(adData.tagIds.map(Tag.getTagById));
 
     const savedAd = await newAd.save();
-    console.log(`New ad saved: ${savedAd.getStringRepresentation()}.`);
     return savedAd;
   }
 

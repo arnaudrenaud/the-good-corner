@@ -61,7 +61,6 @@ class Tag extends BaseEntity {
     }
     const newTag = new Tag(tagData);
     const savedTag = await newTag.save();
-    console.log(`New tag saved: ${savedTag.getStringRepresentation()}.`);
     return savedTag;
   }
 
