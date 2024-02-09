@@ -1,5 +1,8 @@
 import { getDataSource } from "../database";
+import { sendEmail } from "../utils/email";
 import User from "./user";
+
+jest.mock("../utils/email", () => ({ sendEmail: jest.fn() }));
 
 describe("User", () => {
   beforeEach(async () => {
@@ -65,6 +68,20 @@ describe("User", () => {
   });
 
   describe("saveNewUser", () => {
-    // ...
+    it("saves user and returns it", () => {
+      // …
+    });
+
+    it("calls sendEmail with user email address", async () => {
+      await User.saveNewUser({
+        email: "me@test.com",
+        firstName: "Arnaud",
+        lastName: "Renaud",
+        password: "azerty123456",
+      });
+
+      expect(sendEmail).toHaveBeenCalledTimes(1);
+      expect(sendEmail).toHaveBeenCalledWith("me@test.com");
+    });
   });
 });

@@ -10,6 +10,7 @@ import { compare, hash } from "bcrypt";
 import { CreateOrUpdateUser, SignInUser } from "./user.args";
 import UserSession from "./userSession";
 import Ad from "./ad";
+import { sendEmail } from "../utils/email";
 
 @Entity("AppUser")
 @ObjectType()
@@ -61,6 +62,7 @@ class User extends BaseEntity {
     const newUser = new User(userData);
     // TODO: return user-friendly error message when email already used
     const savedUser = await newUser.save();
+    sendEmail(newUser.email);
     return savedUser;
   }
 

@@ -4,4 +4,5 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   maxWorkers: 1, // avoid collision in database-dependent tests
+  clearMocks: true,
 };

@@ -4,6 +4,8 @@ import Category from "./category";
 import Tag from "./tag";
 import User from "./user";
 
+jest.mock("../utils/email", () => ({ sendEmail: jest.fn() }));
+
 async function createOwnerCategoryTags() {
   const owner = await User.saveNewUser({
     email: "me@test.com",
