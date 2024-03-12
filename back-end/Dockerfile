@@ -6,11 +6,10 @@ COPY package*.json .
 RUN npm install
 
 COPY . .
+RUN npm run build
 
 FROM base as dev
 CMD npm run dev
 
 FROM base as ci
-RUN npm run build
-
 CMD npm run test
