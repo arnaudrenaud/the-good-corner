@@ -10,7 +10,7 @@ describe("User", () => {
     for (const entity of database.entityMetadatas) {
       const repository = database.getRepository(entity.name);
       await repository.query(
-        `TRUNCATE "${entity.tableName}" RESTART IDENTITY CASCADE;`
+        `TRUNCATE "${entity.tableName}" RESTART IDENTITY CASCADE;`,
       );
     }
   });
@@ -29,7 +29,7 @@ describe("User", () => {
     describe("when email matches no user in database", () => {
       it("throws error", async () => {
         await expect(
-          User.getUserWithEmailAndPassword({ email, password })
+          User.getUserWithEmailAndPassword({ email, password }),
         ).rejects.toThrow("INVALID_CREDENTIALS");
       });
     });
@@ -45,7 +45,7 @@ describe("User", () => {
           });
 
           await expect(
-            User.getUserWithEmailAndPassword({ email, password })
+            User.getUserWithEmailAndPassword({ email, password }),
           ).rejects.toThrow("INVALID_CREDENTIALS");
         });
       });
@@ -60,7 +60,7 @@ describe("User", () => {
           });
 
           await expect(
-            User.getUserWithEmailAndPassword({ email, password })
+            User.getUserWithEmailAndPassword({ email, password }),
           ).resolves.toEqual(user);
         });
       });

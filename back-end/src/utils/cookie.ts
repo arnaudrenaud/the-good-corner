@@ -5,7 +5,7 @@ import { IncomingMessage } from "node:http";
 
 export function setUserSessionIdInCookie(
   expressResponse: Response,
-  session: UserSession
+  session: UserSession,
 ) {
   expressResponse.cookie("userSessionId", session.id, {
     secure: true,

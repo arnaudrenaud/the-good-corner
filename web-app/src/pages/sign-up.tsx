@@ -46,7 +46,7 @@ export default function SignUpPage() {
   const router = useRouter();
 
   const updateFormData = (
-    partialFormData: Partial<SignUpFormMutationVariables>
+    partialFormData: Partial<SignUpFormMutationVariables>,
   ) => {
     setFormData({ ...formData, ...partialFormData });
   };

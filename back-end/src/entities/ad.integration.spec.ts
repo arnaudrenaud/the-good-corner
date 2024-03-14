@@ -33,7 +33,7 @@ describe("Ad", () => {
     for (const entity of database.entityMetadatas) {
       const repository = database.getRepository(entity.name);
       await repository.query(
-        `TRUNCATE "${entity.tableName}" RESTART IDENTITY CASCADE;`
+        `TRUNCATE "${entity.tableName}" RESTART IDENTITY CASCADE;`,
       );
     }
   });

@@ -59,7 +59,7 @@ export default function ArticlePage() {
 
   const { data, loading, error } = useQuery<GetAdQuery, GetAdQueryVariables>(
     GET_AD,
-    { variables: { id } }
+    { variables: { id } },
   );
 
   if (loading) {

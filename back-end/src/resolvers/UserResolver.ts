@@ -14,7 +14,7 @@ export class UserResolver {
   @Mutation(() => User)
   async signIn(
     @Args() args: SignInUser,
-    @Ctx() context: Context
+    @Ctx() context: Context,
   ): Promise<User> {
     const { user, session } = await User.signIn(args);
     setUserSessionIdInCookie(context.res, session);

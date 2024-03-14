@@ -59,7 +59,7 @@ export default function PublishArticlePage() {
   const router = useRouter();
 
   const updateFormData = (
-    partialFormData: Partial<CreateAdFormMutationVariables>
+    partialFormData: Partial<CreateAdFormMutationVariables>,
   ) => {
     setFormData({ ...formData, ...partialFormData });
   };
