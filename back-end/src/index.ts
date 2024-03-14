@@ -1,5 +1,5 @@
-import "reflect-metadata";
-import { Response } from "express";
+import "reflect-metadata"
+import { Response } from 'express'
 
 import Category from "./entities/category";
 import User from "./entities/user";
