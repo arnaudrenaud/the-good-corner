@@ -7,3 +7,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker compose -f docker-compose.ci.back-end.yml up --build --exit-code-from back-end
+
+  format-fix:
+    name: Fix source code format with Prettier
+    needs: ci-back-end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm run format:fix
+      - run: git add .
+      - run: git commit -m "[AUTO] Fix source code format with Prettier"
+      - run: git push
