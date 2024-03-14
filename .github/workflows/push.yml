@@ -19,5 +19,5 @@ jobs:
       - run: git add .
       - run: git config --global user.email "<>"
       - run: git config --global user.name "GitHub Actions (format-fix)"
-      - run: git commit -m "[AUTO] Fix source code format with Prettier"
+      - run: git commit -m "[AUTO] Fix source code format with Prettier" || echo "Files already correctly formatted."
       - run: git push
