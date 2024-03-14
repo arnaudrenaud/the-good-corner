@@ -4,21 +4,7 @@ import { Response } from "express";
 import Category from "./entities/category";
 import User from "./entities/user";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { ApolloServer } from "@apollo/server"
+import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { AuthChecker, buildSchema } from "type-graphql";
 import { AdResolver } from "./resolvers/AdResolver";
