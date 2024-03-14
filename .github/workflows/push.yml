@@ -1,5 +1,8 @@
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   ci-back-end:
     name: Build and test back-end
