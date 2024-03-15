@@ -25,6 +25,7 @@ export default function Header() {
     GET_MY_PROFILE_HEADER,
   );
 
+  // TODO: Refactor Header
   return (
     <styled.Header>
       <styled.MainMenu>
