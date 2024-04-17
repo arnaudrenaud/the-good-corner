@@ -13,3 +13,6 @@ CMD npm run dev
 
 FROM base as ci
 CMD npm run test
+
+FROM base as prod
+CMD npm run start

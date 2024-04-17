@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  back-end:
+    build:
+      context: ./back-end
+      target: prod
+    environment:
+      - DATABASE_URL=postgres://postgres:password@database:5432/postgres
+    depends_on:
+      - database
+    ports:
+      - 4000:4000
+
+  file-hosting:
+    build:
+      context: ./file-hosting
+      target: prod
+    ports:
+      - 5001:5001
+    volumes:
+      - file-hosting-public:/app/public
+
+  web-app:
+    build:
+      context: ./web-app
+      target: prod
+    ports:
+      - 3000:3000
+
+  database:
+    image: postgres:15
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+
+volumes:
+  database-data:
+  file-hosting-public:
