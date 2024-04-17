@@ -3,7 +3,7 @@ run-dev:
 	docker compose watch
 
 run-prod:
-	docker compose -f docker-compose.prod.yml up --build
+	docker compose -f docker-compose.prod.yml up --build --detach
 
 logs:
 	docker compose logs -f
