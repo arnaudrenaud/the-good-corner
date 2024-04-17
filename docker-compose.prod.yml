@@ -10,8 +10,8 @@ services:
       - NODE_ENV=production
     depends_on:
       - database
-    ports:
-      - 4000:4000
+    expose:
+      - 4000
 
   file-hosting:
     build:
@@ -19,8 +19,8 @@ services:
       target: prod
     environment:
       - NODE_ENV=production
-    ports:
-      - 5001:5001
+    expose:
+      - 5001
     volumes:
       - file-hosting-public:/app/public
 
