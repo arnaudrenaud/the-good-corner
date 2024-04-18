@@ -21,15 +21,17 @@ import React, { useState } from "react";
 const CREATE_AD_FORM = gql`
   mutation CreateAdForm(
     $title: String!
+    $description: String!
     $price: Float!
     $categoryId: Int!
-    $description: String!
+    $tagIds: [String!]!
   ) {
     createAd(
       title: $title
+      description: $description
       price: $price
       categoryId: $categoryId
-      description: $description
+      tagIds: $tagIds
     ) {
       id
     }
@@ -55,6 +57,7 @@ export default function PublishArticlePage() {
     price: 0,
     description: "",
     categoryId: 1,
+    tagIds: [],
   });
   const router = useRouter();
 
@@ -88,10 +91,8 @@ export default function PublishArticlePage() {
   const createArticle = async () => {
     const { data } = await createAdMutation({
       variables: {
-        title: formData.title,
+        ...formData,
         price: formData.price as number,
-        categoryId: formData.categoryId,
-        description: formData.description,
       },
     });
 
