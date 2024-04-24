@@ -1,5 +1,12 @@
 # The Good Corner
 
+Live coding project for Wild Code School, work-and-study program, 2023-2024:
+
+- Language: TypeScript
+- Web-app: React (Next.js)
+- Back-end: Node.js server with an Apollo GraphQL API and TypeORM with a Postgres database
+- All services containerized with Docker, Docker Compose
+
 _Prerequisites: Docker (24+), Make._
 
 ## Development
