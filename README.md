@@ -3,9 +3,9 @@
 Live coding project for Wild Code School, work-and-study program, 2023-2024:
 
 - Language: TypeScript
-- Web-app: React (Next.js)
-- Back-end: Node.js server with an Apollo GraphQL API and TypeORM with a Postgres database
-- All services containerized with Docker, Docker Compose
+- Back-end and API: Node.js Apollo server exposing an GraphQL API using models decorated with type-graphql and TypeORM (Postgres database)
+- Web-app: Next.js pages (React with styled-components), Apollo client and automatic type generation from GraphQL API
+- All services run in Docker containers orchestrated with Docker Compose
 
 _Prerequisites: Docker (24+), Make._
 
