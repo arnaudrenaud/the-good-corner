@@ -33,13 +33,23 @@ export class AdResolver {
 
   @Authorized()
   @Mutation(() => Ad)
-  updateAd(@Arg("id", () => ID) id: string, @Args() args: CreateOrUpdateAd) {
-    return Ad.updateAd(id, args);
+  async updateAd(
+    @Arg("id", () => ID) id: string,
+    @Args() args: CreateOrUpdateAd,
+    @Ctx() { user }: Context,
+  ) {
+    if (await user?.isAdOwner(id)) {
+      return Ad.updateAd(id, args);
+    }
+    throw new Error("Only the ad owner is allowed to update it.");
   }
 
   @Authorized()
   @Mutation(() => Ad)
-  async deleteAd(@Arg("id", () => ID) id: string) {
-    return Ad.deleteAd(id);
+  async deleteAd(@Arg("id", () => ID) id: string, @Ctx() { user }: Context) {
+    if (await user?.isAdOwner(id)) {
+      return Ad.deleteAd(id);
+    }
+    throw new Error("Only the ad owner is allowed to delete it.");
   }
 }

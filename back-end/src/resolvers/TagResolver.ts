@@ -11,6 +11,7 @@ export class TagResolver {
 
   @Mutation(() => Tag)
   createTag(@Args() args: CreateOrUpdateTag) {
+    // TODO: allow only to admin
     return Tag.saveNewTag(args);
   }
 }
