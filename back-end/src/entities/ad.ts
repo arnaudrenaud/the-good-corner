@@ -7,6 +7,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  Or,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { ObjectType, Field, ID, Float } from "type-graphql";
@@ -15,6 +16,7 @@ import Category from "./category";
 import Tag from "./tag";
 import { CreateOrUpdateAd } from "./ad.args";
 import User from "./user";
+import { getCacheClient } from "../cache";
 
 type AdArgs = CreateOrUpdateAd & {
   owner: User;
@@ -131,9 +133,19 @@ class Ad extends BaseEntity {
   }
 
   static async searchAds(query: string): Promise<Ad[]> {
-    return Ad.find({
-      where: { description: ILike(`%${query}%`) },
+    const cache = await getCacheClient();
+    const cacheResult = await cache.get(query);
+    if (cacheResult) {
+      return JSON.parse(cacheResult);
+    }
+    const databaseResult = await Ad.find({
+      where: [
+        { title: ILike(`%${query}%`) },
+        { description: ILike(`%${query}%`) },
+      ],
     });
+    await cache.set(query, JSON.stringify(databaseResult), { EX: 30 });
+    return databaseResult;
   }
 
   getStringRepresentation(): string {
