@@ -17,6 +17,7 @@ import Tag from "./tag";
 import { CreateOrUpdateAd } from "./ad.args";
 import User from "./user";
 import { getCacheClient } from "../cache";
+import { getDataSource } from "../database";
 
 type AdArgs = CreateOrUpdateAd & {
   owner: User;
@@ -138,12 +139,21 @@ class Ad extends BaseEntity {
     if (cacheResult) {
       return JSON.parse(cacheResult);
     }
-    const databaseResult = await Ad.find({
-      where: [
-        { title: ILike(`%${query}%`) },
-        { description: ILike(`%${query}%`) },
-      ],
-    });
+
+    const databaseResult = await (
+      await getDataSource()
+    )
+      .getRepository(Ad)
+      .createQueryBuilder()
+      .select()
+      .where(
+        `to_tsvector('simple', "title" || "description") @@ to_tsquery('simple', :query)`,
+        {
+          query: `${query}:*`,
+        },
+      )
+      .getMany();
+
     await cache.set(query, JSON.stringify(databaseResult), { EX: 30 });
     return databaseResult;
   }
