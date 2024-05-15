@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ILike,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -127,6 +128,12 @@ class Ad extends BaseEntity {
     await ad.save();
     ad.reload();
     return ad;
+  }
+
+  static async searchAds(query: string): Promise<Ad[]> {
+    return Ad.find({
+      where: { description: ILike(`%${query}%`) },
+    });
   }
 
   getStringRepresentation(): string {
