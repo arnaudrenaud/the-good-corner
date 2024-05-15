@@ -16,6 +16,7 @@
   "author": "Arnaud Renaud",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie": "^0.6.0",
     "@types/express": "^4.17.17",

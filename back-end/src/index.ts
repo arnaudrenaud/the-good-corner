@@ -12,6 +12,7 @@ import { TagResolver } from "./resolvers/TagResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 import { getUserSessionIdFromCookie } from "./utils/cookie";
 import { getDataSource } from "./database";
+import { createFakeData } from "./fixtures";
 
 export type Context = { res: Response; user: User | null };
 
@@ -41,6 +42,10 @@ const startApolloServer = async () => {
 
   await getDataSource();
   await Category.initializeCategories();
+
+  if (process.env.NODE_ENV === "dev") {
+    await createFakeData();
+  }
 
   console.log(`🚀  Server ready at: ${url}`);
 };
