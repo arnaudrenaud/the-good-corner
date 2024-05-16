@@ -35,6 +35,11 @@ export class AdResolver {
     return Ad.getAdById(id);
   }
 
+  @Query(() => [Ad])
+  searchAds(@Arg("query") query: string) {
+    return Ad.searchAds(query);
+  }
+
   @Authorized()
   @Mutation(() => Ad)
   createAd(@Args() args: CreateOrUpdateAd, @Ctx() { user }: Context) {

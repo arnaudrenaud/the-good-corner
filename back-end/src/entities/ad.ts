@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ILike,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -14,6 +15,7 @@ import Category from "./category";
 import Tag from "./tag";
 import { CreateOrUpdateAd } from "./ad.args";
 import User from "./user";
+import { getCache } from "../cache";
 
 type AdArgs = CreateOrUpdateAd & {
   owner: User;
@@ -127,6 +129,26 @@ class Ad extends BaseEntity {
     await ad.save();
     ad.reload();
     return ad;
+  }
+
+  static async searchAds(query: string): Promise<Ad[]> {
+    const cache = await getCache();
+
+    const cachedResult = await cache.get(query);
+    if (cachedResult) {
+      return JSON.parse(cachedResult);
+    }
+
+    const databaseResult = await Ad.find({
+      where: [
+        { title: ILike(`%${query}%`) },
+        { description: ILike(`%${query}%`) },
+      ],
+    });
+
+    cache.set(query, JSON.stringify(databaseResult), { EX: 600 });
+
+    return databaseResult;
   }
 
   getStringRepresentation(): string {

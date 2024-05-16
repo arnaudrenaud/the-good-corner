@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import User from "../entities/user";
 import Ad from "../entities/ad";
 
-const ADS_COUNT = 100000;
+const ADS_COUNT = 500000;
 
 export async function createManyAds(owner: User): Promise<void> {
   if ((await Ad.count()) >= ADS_COUNT) {
