@@ -58,6 +58,9 @@ services:
       - ./gateway/nginx.conf:/etc/nginx/nginx.conf
     restart: always
 
+  cache:
+    image: redis
+
 volumes:
   database-data:
   file-hosting-public:
