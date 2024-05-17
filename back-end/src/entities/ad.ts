@@ -95,6 +95,7 @@ class Ad extends BaseEntity {
     const ads = await Ad.find({
       where: { category: { id: categoryId } },
       order: { createdAt: "DESC" },
+      take: 20,
     });
     return ads;
   }
