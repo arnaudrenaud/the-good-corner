@@ -36,7 +36,7 @@ export default function Header() {
         </styled.MainTitle>
         <styled.TextFieldWithButton>
           <MainSearchField type="search" />
-          <PrimaryButton>
+          <PrimaryButton title="Rechercher">
             <SearchIcon />
           </PrimaryButton>
         </styled.TextFieldWithButton>

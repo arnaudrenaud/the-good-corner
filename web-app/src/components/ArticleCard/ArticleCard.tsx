@@ -13,7 +13,10 @@ export default function ArticleCard({
   return (
     <styled.Container>
       <BaseLink href={`/articles/${id}`}>
-        <styled.Image src={`/file-hosting/${id}.jpg`} />
+        <styled.Image
+          src={`/file-hosting/${id}.jpg`}
+          alt={`Image pour l'article ${title}`}
+        />
         <styled.Text>
           <styled.Title>{title}</styled.Title>
           <styled.Price>

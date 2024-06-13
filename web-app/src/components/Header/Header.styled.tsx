@@ -32,7 +32,7 @@ export const TextFieldWithButton = styled.form`
 `;
 
 export const CategoriesNavigation = styled.nav`
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: bold;
   color: #666;
   padding: 16px 10px 6px;
