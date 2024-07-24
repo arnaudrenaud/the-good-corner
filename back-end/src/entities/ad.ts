@@ -44,6 +44,9 @@ class Ad extends BaseEntity {
   @Field(() => Float)
   price!: number;
 
+  @Column({ type: "int" })
+  weightGrams!: number;
+
   @Column({ default: "" })
   @Field()
   picture!: string;
@@ -73,6 +76,7 @@ class Ad extends BaseEntity {
       this.owner = ad.owner;
       this.description = ad.description;
       this.price = ad.price;
+      this.weightGrams = ad.weightGrams;
       this.picture = ad.picture;
       this.location = ad.location;
     }

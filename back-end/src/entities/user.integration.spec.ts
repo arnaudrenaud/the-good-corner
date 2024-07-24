@@ -1,5 +1,5 @@
 import { ObjectId } from "typeorm";
-import { getDataSource } from "../database";
+import { getDataSource } from "../database/database";
 import { sendEmail } from "../utils/email";
 import User from "./user";
 import Ad from "./ad";

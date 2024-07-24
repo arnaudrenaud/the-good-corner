@@ -11,7 +11,9 @@
     "start": "node dist/index.js",
     "build:watch": "tsc --watch",
     "start:watch": "nodemon dist/index.js",
-    "dev": "npm run build:watch & npm run start:watch"
+    "dev": "npm run build:watch & npm run start:watch",
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/database/typeorm-cli.ts",
+    "migration:generate": "npm run typeorm migration:generate src/database/migrations/migration"
   },
   "author": "Arnaud Renaud",
   "license": "ISC",
@@ -38,6 +40,7 @@
     "redis": "^4.6.13",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.1.6",
+    "ts-node": "^10.9.2",
     "type-graphql": "^2.0.0-beta.3",
     "typeorm": "^0.3.20"
   }

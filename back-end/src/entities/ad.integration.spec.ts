@@ -1,4 +1,4 @@
-import { getDataSource } from "../database";
+import { getDataSource } from "../database/database";
 import Ad from "./ad";
 import Category from "./category";
 import Tag from "./tag";

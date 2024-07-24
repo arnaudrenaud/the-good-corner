@@ -14,6 +14,10 @@ export class CreateOrUpdateAd {
   @Min(0)
   price!: number;
 
+  @Field(() => Int)
+  @Min(0)
+  weightGrams!: number;
+
   @Field({ nullable: true })
   picture!: string;
 
