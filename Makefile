@@ -23,3 +23,7 @@ web-app-generate-graphql-types:
 database-generate-migration:
 	docker compose exec back-end npm run migration:generate
 	docker compose cp back-end:/app/src/database/migrations/ back-end/src/database
+
+database-backup:
+	docker compose exec database pg_dumpall -c -U postgres > ./db-dumps/pg_`date +%Y-%m-%d"_"%H-%M-%S`.sql
+	rclone sync db-dumps "Google Drive":the-good-corner-db-dumps
