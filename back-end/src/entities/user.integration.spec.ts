@@ -96,6 +96,7 @@ describe("User", () => {
       title: "Mon annonce",
       description: "lorem ipsum",
       price: 100,
+      weightGrams: 200,
       picture: "picture-url",
       location: "Paris",
       categoryId: 1,
